@@ -21,5 +21,16 @@
   </head>
   <body>
     <div id="root"></div>
+    <script>
+  // Automatically snap to the top when navigating or clicking menu links
+  document.querySelectorAll('a, button').forEach(element => {
+    element.addEventListener('click', () => {
+      // Small 50ms delay lets the page swap content first, then instantly snaps to top
+      setTimeout(() => {
+        window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+      }, 50);
+    });
+  });
+</script>
   </body>
 </html>
