@@ -3,32 +3,37 @@
   <head>
     <meta charset="UTF-8" />
     <title>TruckEase | Trucking Compliance & Back-Office for Owner-Operators</title>
-<meta name="description" content="TruckEase helps owner-operators and small fleets across Canada and the US stay compliant, protect their operating authority, and run their back office without the chaos.">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta property="og:title" content="TruckEase | Trucking Compliance for Owner-Operators">
-<meta property="og:description" content="Enterprise-grade compliance infrastructure for 1–10 truck carriers. IFTA, IRP, DOT filings, driver records — handled.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://truckeasesolutions.com">
-<meta property="og:image" content="https://truckeasesolutions.com/opengraph.jpg">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="TruckEase | Trucking Compliance for Owner-Operators">
-<meta name="twitter:description" content="Enterprise-grade compliance infrastructure for 1–10 truck carriers across Canada and the US.">
-<link rel="canonical" href="https://truckeasesolutions.com">
+    <meta id="meta-description" name="description" content="TruckEase helps owner-operators and small fleets across Canada and the US stay compliant, protect their operating authority, and run their back office without the chaos.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="og:title" content="TruckEase | Trucking Compliance for Owner-Operators">
+    <meta property="og:description" content="Enterprise-grade compliance infrastructure for 1–10 truck carriers. IFTA, IRP, DOT filings, driver records — handled.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://truckeasesolutions.com">
+    <meta property="og:image" content="https://truckeasesolutions.com/opengraph.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="TruckEase | Trucking Compliance for Owner-Operators">
+    <meta name="twitter:description" content="Enterprise-grade compliance infrastructure for 1–10 truck carriers across Canada and the US.">
+    <link id="canonical-link" rel="canonical" href="https://truckeasesolutions.com">
 
-<!-- Organization Schema Markup -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  "name": "TruckEase Solutions",
-  "url": "https://truckeasesolutions.com",
-  "logo": "https://truckeasesolutions.com/truckease-logo.png",
-  "description": "Trucking compliance and back-office administration platform for owner-operators and small fleets in Canada and the United States.",
-  "email": "support@truckeasesolutions.com",
-  "areaServed": ["Canada", "United States"],
-  "serviceType": "Transportation Compliance Services"
-}
-</script>    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <!-- Organization Schema Markup -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "TruckEase Solutions",
+      "url": "https://truckeasesolutions.com",
+      "logo": "https://truckeasesolutions.com/truckease-logo.png",
+      "description": "Trucking compliance and back-office administration platform for owner-operators and small fleets in Canada and the United States.",
+      "email": "support@truckeasesolutions.com",
+      "areaServed": ["Canada", "United States"],
+      "serviceType": "Transportation Compliance Services"
+    }
+    </script>
+    
+    <!-- Dynamic FAQ Schema Slot -->
+    <script id="faq-schema" type="application/ld+json"></script>
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -37,17 +42,95 @@
   </head>
   <body>
     <div id="root"></div>
+    
     <script>
-  // A global observer that watches for any routing or URL updates
-  let currentPath = window.location.pathname;
-  
-  setInterval(() => {
-    if (currentPath !== window.location.pathname) {
-      currentPath = window.location.pathname;
-      // Instantly forces the view straight back to the header
-      window.scrollTo(0, 0);
-    }
-  }, 100);
-</script>
+      // Page specific meta configurations
+      const metaData = {
+        "/": {
+          title: "TruckEase | Trucking Compliance & Back-Office for Owner-Operators",
+          desc: "TruckEase helps owner-operators and small fleets across Canada and the US stay compliant, protect their operating authority, and run their back office without the chaos."
+        },
+        "/platform": {
+          title: "Compliance Tracking Platform for Small Fleets | TruckEase",
+          desc: "One dashboard for DOT status, document storage, renewal alerts, and maintenance records. Built for owner-operators and fleets up to 10 trucks."
+        },
+        "/services": {
+          title: "Trucking Compliance Services — IFTA, IRP, DQ Files | TruckEase",
+          desc: "Done-for-you IFTA filing, IRP registration, driver qualification management, and authority maintenance for small carriers across Canada and the US."
+        },
+        "/about": {
+          title: "About TruckEase | Built for Owner-Operators Who Drive and Run the Business",
+          desc: "TruckEase exists because small carriers face the same compliance burden as national fleets — without the team to manage it. We close that gap."
+        },
+        "/contact": {
+          title: "Contact TruckEase | Direct Access to Compliance Specialists",
+          desc: "Questions about IFTA, CVOR, DOT filings, or cross-border compliance? Reach TruckEase directly. Real person responds within 1 business day.",
+          faq: {
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "Do you work with single-truck operations?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Yes. Our tracking platform and managed services are built specifically for independent owner-operators and small fleets of 1 to 10 trucks."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Do your services cover both Canada and the United States?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Yes. We handle compliance across FMCSA (DOT, MC) and Canadian provincial frameworks including NSC and CVOR, including cross-border requirements."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "How fast do you respond?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "We review every message personally and respond within 1 business day."
+                }
+              }
+            ]
+          }
+        },
+        "/free-review": {
+          title: "Free Fleet Compliance Review | TruckEase",
+          desc: "Get a free review of your DOT, MC, NSC, or CVOR profile. We check your authority status, filing currency, and safety score — no commitment required."
+        }
+      };
+
+      function updatePageMeta() {
+        const path = window.location.pathname;
+        const data = metaData[path] || metaData["/"];
+        
+        // Update Title, Meta Description, and Canonical URL link
+        document.title = data.title;
+        document.getElementById("meta-description").setAttribute("content", data.desc);
+        document.getElementById("canonical-link").setAttribute("href", "https://truckeasesolutions.com" + path);
+        
+        // Handle Dynamic FAQ Injection
+        const faqScript = document.getElementById("faq-schema");
+        if (data.faq) {
+          faqScript.textContent = JSON.stringify(data.faq);
+        } else {
+          faqScript.textContent = "";
+        }
+      }
+
+      // Track URL Changes and Snap back to the Top Header
+      let currentPath = window.location.pathname;
+      updatePageMeta(); // Run once immediately on initial load
+      
+      setInterval(() => {
+        if (currentPath !== window.location.pathname) {
+          currentPath = window.location.pathname;
+          window.scrollTo(0, 0);
+          updatePageMeta(); // Update titles and SEO fields for the new view
+        }
+      }, 100);
+    </script>
   </body>
 </html>
