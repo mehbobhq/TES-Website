@@ -22,15 +22,16 @@
   <body>
     <div id="root"></div>
     <script>
-  // Automatically snap to the top when navigating or clicking menu links
-  document.querySelectorAll('a, button').forEach(element => {
-    element.addEventListener('click', () => {
-      // Small 50ms delay lets the page swap content first, then instantly snaps to top
-      setTimeout(() => {
-        window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
-      }, 50);
-    });
-  });
+  // A global observer that watches for any routing or URL updates
+  let currentPath = window.location.pathname;
+  
+  setInterval(() => {
+    if (currentPath !== window.location.pathname) {
+      currentPath = window.location.pathname;
+      // Instantly forces the view straight back to the header
+      window.scrollTo(0, 0);
+    }
+  }, 100);
 </script>
   </body>
 </html>
