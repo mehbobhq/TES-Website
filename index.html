@@ -122,16 +122,40 @@
         
         // Update Title, Meta Description, and Canonical URL link
         document.title = data.title;
-        document.getElementById("meta-description").setAttribute("content", data.desc);
-        document.getElementById("canonical-link").setAttribute("href", "https://truckeasesolutions.com" + path);
+        const descMeta = document.getElementById("meta-description");
+        if (descMeta) descMeta.setAttribute("content", data.desc);
+        const canonicalLink = document.getElementById("canonical-link");
+        if (canonicalLink) canonicalLink.setAttribute("href", "https://truckeasesolutions.com" + path);
         
         // Handle Dynamic FAQ Injection
         const faqScript = document.getElementById("faq-schema");
-        if (data.faq) {
-          faqScript.textContent = JSON.stringify(data.faq);
-        } else {
-          faqScript.textContent = "";
+        if (faqScript) {
+          if (data.faq) {
+            faqScript.textContent = JSON.stringify(data.faq);
+          } else {
+            faqScript.textContent = "";
+          }
         }
+
+        // Dynamically inject the Blog link into the footer if it's not already there
+        injectBlogLink();
+      }
+
+      function injectBlogLink() {
+        // Wait briefly for the framework script to draw the footer layout elements
+        setTimeout(() => {
+          const footerNav = document.querySelector("footer nav, footer div.grid, footer ul");
+          if (footerNav && !document.getElementById("dynamic-blog-link")) {
+            const blogLink = document.createElement("a");
+            blogLink.id = "dynamic-blog-link";
+            blogLink.href = "/blog";
+            blogLink.className = "text-slate-600 hover:text-slate-900 transition text-sm font-medium mx-2";
+            blogLink.innerText = "Blog";
+            
+            // Appends it cleanly to your footer navigation container
+            footerNav.appendChild(blogLink);
+          }
+        }, 300);
       }
 
       // Track URL Changes and Snap back to the Top Header
