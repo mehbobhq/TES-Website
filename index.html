@@ -141,21 +141,37 @@
         injectBlogLink();
       }
 
-      function injectBlogLink() {
+     function injectBlogLink() {
         // Wait briefly for the framework script to draw the footer layout elements
         setTimeout(() => {
-          const footerNav = document.querySelector("footer nav, footer div.grid, footer ul");
-          if (footerNav && !document.getElementById("dynamic-blog-link")) {
+          if (document.getElementById("dynamic-blog-link")) return;
+
+          // 1. Find all links inside the footer
+          const footerLinks = document.querySelectorAll("footer a");
+          let contactLink = null;
+
+          // 2. Loop through them to find the exact "Contact" link
+          for (const link of footerLinks) {
+            if (link.textContent.trim() === "Contact") {
+              contactLink = link;
+              break;
+            }
+          }
+
+          // 3. Insert the Blog link directly after the Contact link matching its design rules
+          if (contactLink && contactLink.parentNode) {
             const blogLink = document.createElement("a");
             blogLink.id = "dynamic-blog-link";
             blogLink.href = "/blog";
-            blogLink.className = "text-slate-600 hover:text-slate-900 transition text-sm font-medium mx-2";
-            blogLink.innerText = "Blog";
             
-            // Appends it cleanly to your footer navigation container
-            footerNav.appendChild(blogLink);
+            // Copies the exact Tailwind structural layout styles of your other menu links
+            blogLink.className = "text-slate-400 hover:text-white transition text-sm block mt-2";
+            blogLink.innerText = "Blog";
+
+            // Places it beautifully directly below Contact
+            contactLink.parentNode.insertBefore(blogLink, contactLink.nextSibling);
           }
-        }, 300);
+        }, 400);
       }
 
       // Track URL Changes and Snap back to the Top Header
