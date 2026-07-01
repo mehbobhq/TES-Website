@@ -1,6 +1,9 @@
 {
   "rewrites": [
-    { "source": "/(.*)", "destination": "/" }
+    { 
+      "source": "/((?!blog|index.html).*)" , 
+      "destination": "/" 
+    }
   ],
   "headers": [
     {
