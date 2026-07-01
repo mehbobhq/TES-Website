@@ -1,13 +1,12 @@
 {
+  "cleanUrls": true,
   "rewrites": [
-    { 
-      "source": "/blog", 
-      "destination": "/blog.html" 
-    },
-    { 
-      "source": "/((?!blog|blog.html|index.html).*)" , 
-      "destination": "/" 
-    }
+    { "source": "/blog", "destination": "/blog.html" },
+    { "source": "/platform", "destination": "/" },
+    { "source": "/services", "destination": "/" },
+    { "source": "/about", "destination": "/" },
+    { "source": "/contact", "destination": "/" },
+    { "source": "/free-review", "destination": "/" }
   ],
   "headers": [
     {
