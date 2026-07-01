@@ -1,7 +1,11 @@
 {
   "rewrites": [
     { 
-      "source": "/((?!blog|index.html).*)" , 
+      "source": "/blog", 
+      "destination": "/blog.html" 
+    },
+    { 
+      "source": "/((?!blog|blog.html|index.html).*)" , 
       "destination": "/" 
     }
   ],
