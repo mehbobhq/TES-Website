@@ -1,3 +1,2 @@
 User-agent: *
 Allow: /
-Sitemap: https://truckeasesolutions.com/sitemap.xml
