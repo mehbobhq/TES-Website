@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TruckEase Solutions | Blog</title>
+  <!-- Tailwind CSS CDN for styling -->
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-white">
+
+  <!-- MASTER BLOG CONTAINER -->
+  <article class="max-w-3xl mx-auto px-4 py-12 font-sans text-slate-800">
+    <header class="mb-8 border-b border-slate-200 pb-6">
+      <span id="blog-category" class="text-sm font-semibold tracking-wider uppercase text-blue-600">Loading...</span>
+      <h1 id="blog-title" class="text-3xl font-bold tracking-tight text-slate-900 mt-2 sm:text-4xl">Loading Article...</h1>
+      <p class="text-slate-500 mt-3 text-sm">Estimated reading time: 5 minutes</p>
+    </header>
+
+    <section id="blog-content" class="space-y-6 leading-relaxed">
+      <!-- Article content will load here automatically -->
+    </section>
+
+    <!-- REUSABLE FOOTER CALL TO ACTION -->
+    <footer class="mt-12 bg-blue-50 border border-blue-100 rounded-xl p-6 text-center">
+      <h3 class="text-lg font-bold text-slate-900">Worried about your upcoming quarterly tax filings?</h3>
+      <p class="text-sm text-slate-600 mt-1 mb-4">Let our automated systems handle the parsing, tracking, and compliance checklists for you.</p>
+      <a href="/free-review" class="inline-block bg-slate-900 hover:bg-slate-800 text-white font-medium text-sm px-5 py-2.5 rounded-lg transition">
+        Get a Free Compliance Review
+      </a>
+    </footer>
+  </article>
+
+  <!-- DYNAMIC BLOG ENGINE SCRIPT -->
+  <script>
+    // 1. Your centralized article library
+    const ARTICLE_DATA = {
+      "ifta-guide": {
+        title: "Demystifying IFTA: A Step-by-Step Filing Guide for Cross-Border Owner-Operators",
+        category: "Compliance Guides",
+        content: `
+          <p class="text-lg text-slate-600">The International Fuel Tax Agreement (IFTA) is one of the most tedious compliance requirements commercial trucking fleets face each quarter. For owner-operators moving freight across the US-Canada border, managing varying state and provincial tax rates can quickly turn into an audit nightmare if mileage and fuel receipts aren't tracked systematically.</p>
+          <h2 class="text-xl font-semibold text-slate-900 pt-4">1. Do You Need an IFTA License?</h2>
+          <p>If you operate a qualified motor vehicle across state or provincial boundaries, you are required to register. A vehicle is considered qualified if it has two axles and a gross vehicle weight (GVW) exceeding 26,000 lbs, or has three or more axles regardless of weight.</p>
+          <h2 class="text-xl font-semibold text-slate-900 pt-4">2. The Golden Rule: Accurate Jurisdiction Tracking</h2>
+          <p>An audit-proof filing relies heavily on two clean datasets: total distance traveled per jurisdiction, and total gallons/liters of fuel purchased in each jurisdiction.</p>
+          <div class="bg-slate-50 border-l-4 border-amber-500 p-4 my-6 rounded-r">
+            <p class="text-sm font-medium text-amber-800"><strong>Audit Warning:</strong> Gaps between your odometer readings at jurisdiction border crossings and your total quarterly mileage are the number one red flag that triggers an automated state compliance audit.</p>
+          </div>
+        `
+      },
+      "audit-checklist": {
+        title: "How to Prepare Your Fleet for an NSC Safety Audit",
+        category: "Audit Readiness",
+        content: `
+          <p class="text-lg text-slate-600">National Safety Code audits don't have to be terrifying...</p>
+          <h2 class="text-xl font-semibold text-slate-900 pt-4">1. Keep Maintenance Logs Clean</h2>
+          <p>Ensure all safety fitness certifications and driver files are organized and up to date.</p>
+        `
+      }
+    };
+
+    // 2. Script to automatically extract the ID from the URL and inject the content
+    function loadArticle() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const articleId = urlParams.get('id') || 'ifta-guide'; // Default to ifta-guide if no ID is passed
+      const article = ARTICLE_DATA[articleId];
+
+      if (article) {
+        document.title = article.title + " | TruckEase Blog";
+        document.getElementById('blog-category').innerText = article.category;
+        document.getElementById('blog-title').innerText = article.title;
+        document.getElementById('blog-content').innerHTML = article.content;
+      } else {
+        document.getElementById('blog-content').innerHTML = "<p class='text-center py-10 text-red-500 font-medium'>Article not found.</p>";
+      }
+    }
+
+    // Run the function when the page loads
+    window.onload = loadArticle;
+  </script>
+</body>
+</html>
