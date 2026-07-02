@@ -37,8 +37,13 @@ export default async function handler(req, res) {
       return res.status(response.status).json({ error: errorData.message || 'Brevo API error' });
     }
 
-    // Success! Tell the frontend the code was dispatched
-    return res.status(200).json({ success: true, message: 'OTP sent successfully' });
+   // Ultimate success payload to satisfy any frontend validation logic
+    return res.status(200).json({ 
+      success: true, 
+      status: "success",
+      ok: true,
+      message: 'OTP sent successfully' 
+    });
 
   } catch (error) {
     return res.status(500).json({ error: 'Internal server error' });
