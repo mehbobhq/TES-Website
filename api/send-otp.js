@@ -8,8 +8,12 @@ export default async function handler(req, res) {
     const { email } = req.body;
     if (!email) return res.status(400).json({ error: 'Email is required' });
 
-    // 1. Generate a real 6-digit OTP
-    const generatedOtp = Math.floor(100000 + Math.random() * 900000).toString();
+    // 1. Generate a secure, deterministic OTP based on email + current 5-minute time window
+    const secret = process.env.JWT_SECRET || 'truckease_secure_secret_2026_xYz';
+    const timeWindow = Math.floor(Date.now() / (5 * 60 * 1000)); // Changes every 5 minutes
+    
+    const hash = crypto.createHmac('sha256', secret).update(`${email.toLowerCase()}.${timeWindow}`).digest('hex');
+    const generatedOtp = (parseInt(hash.substring(0, 8), 16) % 900000 + 100000).toString();
 
     // 2. Dispatch email via Brevo
     const brevoResponse = await fetch('https://api.brevo.com/v3/smtp/email', {
@@ -35,20 +39,11 @@ export default async function handler(req, res) {
       return res.status(brevoResponse.status).json({ error: errorData.message || 'Email delivery failed' });
     }
 
-    // 3. Create a time-locked security signature natively (Expires in 5 mins)
-    const expires = Date.now() + 5 * 60 * 1000; // 5 minutes from now
-    const dataToSign = `${email}.${generatedOtp}.${expires}`;
-    
-    const secret = process.env.JWT_SECRET || 'fallback_secret_key_123';
-    const hash = crypto.createHmac('sha256', secret).update(dataToSign).digest('hex');
-    const secureToken = `${hash}.${expires}`;
-
-    // 4. Return success along with the native token
+    // 3. Return a clean success payload matching what your frontend expects
     return res.status(200).json({
       success: true,
       status: "success",
       ok: true,
-      token: secureToken,
       message: 'OTP sent successfully'
     });
 
