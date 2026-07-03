@@ -1,4 +1,4 @@
-import jwt from 'jsonwebtoken';
+import crypto from 'crypto';
 
 export default async function handler(req, res) {
   if (req.method === 'OPTIONS') return res.status(200).end();
@@ -11,27 +11,32 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'Missing verification details' });
     }
 
-    try {
-      // 1. Verify and decrypt the token using our secret key
-      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    // 1. Unpack the native token structure [hash, expires]
+    const [providedHash, expiresStr] = token.split('.');
+    const expires = parseInt(expiresStr, 10);
 
-      // 2. Cross-reference email and matching OTP code
-      if (decoded.email !== email || decoded.otp !== otp) {
-        return res.status(400).json({ error: 'Invalid verification code' });
-      }
-
-      // 3. If it passes everything, return a strict validation success payload
-      return res.status(200).json({
-        success: true,
-        status: "success",
-        ok: true,
-        message: "OTP verified successfully"
-      });
-
-    } catch (jwtError) {
-      // Catches expired or tampered tokens automatically
+    // 2. Security Check: Has the 5-minute window expired?
+    if (Date.now() > expires) {
       return res.status(400).json({ error: 'Verification session expired. Please request a new code.' });
     }
+
+    // 3. Cryptographical Re-verification
+    const dataToSign = `${email}.${otp}.${expires}`;
+    const secret = process.env.JWT_SECRET || 'fallback_secret_key_123';
+    const computedHash = crypto.createHmac('sha256', secret).update(dataToSign).digest('hex');
+
+    // 4. If the data or signature was tampered with, it won't match
+    if (providedHash !== computedHash) {
+      return res.status(400).json({ error: 'Invalid verification code' });
+    }
+
+    // 5. Success! Strict verification complete.
+    return res.status(200).json({
+      success: true,
+      status: "success",
+      ok: true,
+      message: "OTP verified successfully"
+    });
 
   } catch (error) {
     return res.status(500).json({ error: 'Internal server error' });
