@@ -3,11 +3,7 @@
   "rewrites": [
     { "source": "/api/(.*)", "destination": "/api/$1" },
     { "source": "/blog", "destination": "/blog.html" },
-    { "source": "/platform", "destination": "/" },
-    { "source": "/services", "destination": "/" },
-    { "source": "/about", "destination": "/" },
-    { "source": "/contact", "destination": "/" },
-    { "source": "/free-review", "destination": "/" }
+    { "source": "/((?!api|blog).*)", "destination": "/index.html" }
   ],
   "headers": [
     {
