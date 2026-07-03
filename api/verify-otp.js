@@ -5,32 +5,29 @@ export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
   try {
-    const { email, otp, token } = req.body;
+    const { email, otp } = req.body;
 
-    if (!otp || !token || !email) {
+    if (!otp || !email) {
       return res.status(400).json({ error: 'Missing verification details' });
     }
 
-    // 1. Unpack the native token structure [hash, expires]
-    const [providedHash, expiresStr] = token.split('.');
-    const expires = parseInt(expiresStr, 10);
+    const secret = process.env.JWT_SECRET || 'truckease_secure_secret_2026_xYz';
+    const timeWindow = Math.floor(Date.now() / (5 * 60 * 1000));
 
-    // 2. Security Check: Has the 5-minute window expired?
-    if (Date.now() > expires) {
-      return res.status(400).json({ error: 'Verification session expired. Please request a new code.' });
-    }
+    // Verify against current 5-minute window
+    const hashCurrent = crypto.createHmac('sha256', secret).update(`${email.toLowerCase()}.${timeWindow}`).digest('hex');
+    const expectedOtpCurrent = (parseInt(hashCurrent.substring(0, 8), 16) % 900000 + 100000).toString();
 
-    // 3. Cryptographical Re-verification
-    const dataToSign = `${email}.${otp}.${expires}`;
-    const secret = process.env.JWT_SECRET || 'fallback_secret_key_123';
-    const computedHash = crypto.createHmac('sha256', secret).update(dataToSign).digest('hex');
+    // Verify against previous 5-minute window (grace period for users)
+    const hashPrevious = crypto.createHmac('sha256', secret).update(`${email.toLowerCase()}.${timeWindow - 1}`).digest('hex');
+    const expectedOtpPrevious = (parseInt(hashPrevious.substring(0, 8), 16) % 900000 + 100000).toString();
 
-    // 4. If the data or signature was tampered with, it won't match
-    if (providedHash !== computedHash) {
+    // Strict cross-checking
+    if (otp !== expectedOtpCurrent && otp !== expectedOtpPrevious) {
       return res.status(400).json({ error: 'Invalid verification code' });
     }
 
-    // 5. Success! Strict verification complete.
+    // If it matches either window, validation is a 100% cryptographical success
     return res.status(200).json({
       success: true,
       status: "success",
