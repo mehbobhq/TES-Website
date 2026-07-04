@@ -3,34 +3,33 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <!-- Meta updated dynamically below depending on view mode -->
-  <title id="page-title">TruckEase | Compliance Guides & Resources</title>
+  <title>TruckEase | Compliance Guides & Resources</title>
   <meta name="description"
         id="meta-description"
-        content="Plain-language guides on IFTA, DOT compliance, driver qualification, and fleet record-keeping — written for carriers who run operations without a compliance department." />
+        content="Plain-language compliance guides for carriers across the US and Canada — IFTA, DOT filings, driver qualification, audit readiness." />
   <meta name="robots" content="index, follow" />
+  <link id="canonical-link" rel="canonical" href="https://truckeasesolutions.com/blog" />
 
-  <link rel="canonical" id="canonical-link" href="https://truckeasesolutions.com/blog" />
-
-  <!-- OG / Twitter -->
-  <meta property="og:type" content="website" />
+  <meta property="og:type"  content="website" />
   <meta property="og:image" content="https://truckeasesolutions.com/opengraph.jpg" />
-  <meta id="og-title" property="og:title" content="TruckEase Blog | Compliance Guides for Carriers" />
-  <meta id="og-desc" property="og:description"
+  <meta id="og-title" property="og:title"
+        content="TruckEase Blog | Compliance Guides for Carriers" />
+  <meta id="og-desc"  property="og:description"
         content="Plain-language compliance guides for carriers across the US and Canada." />
   <meta name="twitter:card" content="summary_large_image" />
 
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet" />
 
   <style>
-    /* ── Design tokens matching main site palette ─────────────────── */
+    /* ── Design tokens — matches main site exactly ───────────────── */
     :root {
       --navy:   #0c1a36;
       --orange: #e8720c;
+      --teal:   #14b8a6;
       --slate:  #64748b;
       --border: #e2e8f0;
       --bg:     #f8fafc;
@@ -38,26 +37,22 @@
       --radius: 12px;
       --font:   'Inter', sans-serif;
       --max-w:  1120px;
-      --art-w:  720px;
+      --art-w:  740px;
     }
-
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
+    html { scroll-behavior: smooth; }
     body {
       font-family: var(--font);
       background: var(--white);
       color: var(--navy);
       -webkit-font-smoothing: antialiased;
     }
-
     a { color: inherit; text-decoration: none; }
 
-    /* ── NAV ──────────────────────────────────────────────────────── */
+    /* ── NAV — Blog NOT listed (footer only) ─────────────────────── */
     .nav {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: rgba(12, 26, 54, 0.97);
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(12,26,54,0.97);
       backdrop-filter: blur(8px);
       border-bottom: 1px solid rgba(255,255,255,0.08);
     }
@@ -69,545 +64,486 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 32px;
     }
-    .nav-logo img {
-      height: 32px;
-      width: auto;
-      display: block;
-    }
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 28px;
-      list-style: none;
-    }
+    .nav-logo img { height: 30px; width: auto; display: block; }
+    .nav-links { display: flex; align-items: center; gap: 28px; list-style: none; }
     .nav-links a {
-      color: rgba(255,255,255,0.75);
-      font-size: 14px;
-      font-weight: 500;
+      color: rgba(255,255,255,0.72);
+      font-size: 14px; font-weight: 500;
       transition: color 0.15s;
     }
-    .nav-links a:hover,
-    .nav-links a.active { color: #fff; }
+    .nav-links a:hover { color: #fff; }
     .nav-cta {
-      background: var(--orange);
-      color: #fff !important;
-      padding: 8px 18px;
-      border-radius: 8px;
-      font-weight: 600;
-      font-size: 14px;
-      transition: opacity 0.15s;
+      background: var(--orange); color: #fff !important;
+      padding: 9px 20px; border-radius: 8px;
+      font-weight: 600; font-size: 14px;
+      transition: opacity 0.15s; white-space: nowrap;
     }
-    .nav-cta:hover { opacity: 0.9; }
+    .nav-cta:hover { opacity: 0.88; }
 
-    /* ── LISTING VIEW ─────────────────────────────────────────────── */
+    /* ── VIEWS ───────────────────────────────────────────────────── */
     #view-listing { display: block; }
     #view-article  { display: none; }
 
+    /* ── LISTING HERO ────────────────────────────────────────────── */
     .listing-hero {
       background: var(--navy);
-      padding: 64px 24px 56px;
+      padding: 72px 24px 64px;
       text-align: center;
     }
-    .listing-hero .eyebrow {
+    .eyebrow {
       display: inline-block;
       color: var(--orange);
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.14em;
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 0.15em;
       text-transform: uppercase;
-      margin-bottom: 16px;
+      margin-bottom: 18px;
     }
     .listing-hero h1 {
       color: #fff;
-      font-size: clamp(28px, 4vw, 42px);
-      font-weight: 700;
-      line-height: 1.15;
-      max-width: 600px;
-      margin: 0 auto 16px;
+      font-size: clamp(28px, 4.5vw, 44px);
+      font-weight: 700; line-height: 1.15;
+      max-width: 580px; margin: 0 auto 18px;
     }
     .listing-hero p {
-      color: rgba(255,255,255,0.6);
-      font-size: 16px;
-      max-width: 480px;
-      margin: 0 auto;
-      line-height: 1.7;
+      color: rgba(255,255,255,0.58);
+      font-size: 16px; line-height: 1.75;
+      max-width: 500px; margin: 0 auto;
     }
 
+    /* ── ARTICLE GRID ────────────────────────────────────────────── */
     .listing-grid {
       max-width: var(--max-w);
       margin: 0 auto;
-      padding: 56px 24px;
+      padding: 60px 24px 80px;
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
       gap: 28px;
     }
-
     .article-card {
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 28px;
+      padding: 30px;
       cursor: pointer;
-      transition: box-shadow 0.2s, transform 0.2s, border-color 0.2s;
       background: var(--white);
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
+      display: flex; flex-direction: column; gap: 14px;
+      transition: box-shadow 0.2s, transform 0.2s, border-color 0.2s;
     }
     .article-card:hover {
-      box-shadow: 0 8px 24px rgba(12,26,54,0.1);
+      box-shadow: 0 8px 28px rgba(12,26,54,0.10);
       transform: translateY(-2px);
       border-color: #c7d2e0;
     }
     .card-category {
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 0.13em; text-transform: uppercase;
       color: var(--orange);
     }
     .card-title {
-      font-size: 17px;
-      font-weight: 700;
-      line-height: 1.35;
-      color: var(--navy);
+      font-size: 17px; font-weight: 700;
+      line-height: 1.35; color: var(--navy);
     }
     .card-teaser {
-      font-size: 14px;
-      color: var(--slate);
-      line-height: 1.65;
-      flex: 1;
+      font-size: 14px; color: var(--slate);
+      line-height: 1.7; flex: 1;
     }
     .card-meta {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-size: 12px;
-      color: #94a3b8;
+      display: flex; align-items: center; gap: 10px;
+      font-size: 12px; color: #94a3b8;
       border-top: 1px solid var(--border);
-      padding-top: 12px;
-      margin-top: 4px;
+      padding-top: 14px; margin-top: 2px;
     }
     .read-more {
-      margin-left: auto;
-      color: var(--navy);
-      font-weight: 600;
-      font-size: 13px;
-      display: flex;
-      align-items: center;
-      gap: 4px;
+      margin-left: auto; color: var(--navy);
+      font-weight: 600; font-size: 13px;
     }
-    .read-more::after { content: '→'; }
+    .read-more::after { content: ' →'; }
 
-    /* ── ARTICLE VIEW ─────────────────────────────────────────────── */
+    /* ── ARTICLE VIEW ────────────────────────────────────────────── */
     .article-wrap {
       max-width: var(--art-w);
       margin: 0 auto;
       padding: 56px 24px 80px;
     }
     .back-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--slate);
-      margin-bottom: 36px;
-      cursor: pointer;
-      transition: color 0.15s;
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 13px; font-weight: 600;
+      color: var(--slate); margin-bottom: 40px;
+      cursor: pointer; transition: color 0.15s;
+      background: none; border: none;
     }
     .back-btn:hover { color: var(--navy); }
     .back-btn::before { content: '←'; }
-
     .article-eyebrow {
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--orange);
-      margin-bottom: 12px;
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--orange); margin-bottom: 14px;
     }
     .article-h1 {
       font-size: clamp(24px, 3.5vw, 36px);
-      font-weight: 700;
-      line-height: 1.2;
-      color: var(--navy);
-      margin-bottom: 16px;
+      font-weight: 700; line-height: 1.2;
+      color: var(--navy); margin-bottom: 16px;
     }
     .article-byline {
-      font-size: 13px;
-      color: #94a3b8;
+      font-size: 13px; color: #94a3b8;
       border-bottom: 1px solid var(--border);
-      padding-bottom: 24px;
-      margin-bottom: 36px;
+      padding-bottom: 28px; margin-bottom: 40px;
     }
     .article-body { line-height: 1.8; color: #1e293b; }
-    .article-body p { font-size: 16px; margin-bottom: 20px; }
+    .article-body p  { font-size: 16px; margin-bottom: 22px; }
     .article-body h2 {
-      font-size: 20px;
-      font-weight: 700;
-      color: var(--navy);
-      margin: 36px 0 12px;
+      font-size: 21px; font-weight: 700;
+      color: var(--navy); margin: 40px 0 14px;
     }
     .article-body h3 {
-      font-size: 17px;
-      font-weight: 600;
-      color: var(--navy);
-      margin: 28px 0 10px;
+      font-size: 17px; font-weight: 600;
+      color: var(--navy); margin: 30px 0 10px;
     }
     .article-body ul, .article-body ol {
-      padding-left: 20px;
-      margin-bottom: 20px;
+      padding-left: 22px; margin-bottom: 22px;
     }
-    .article-body li { font-size: 16px; margin-bottom: 8px; }
+    .article-body li { font-size: 16px; margin-bottom: 9px; }
     .callout {
       background: #fff8f0;
       border-left: 4px solid var(--orange);
       border-radius: 0 8px 8px 0;
-      padding: 16px 20px;
-      margin: 28px 0;
+      padding: 16px 20px; margin: 32px 0;
     }
     .callout p { margin-bottom: 0; font-size: 14px; color: #7c3600; }
     .callout strong { color: #a84400; }
 
-    /* ── ARTICLE CTA ──────────────────────────────────────────────── */
+    /* ── ARTICLE CTA — absolute URL so it works outside SPA ─────── */
     .article-cta {
-      margin-top: 56px;
+      margin-top: 60px;
       background: #f0f4ff;
       border: 1px solid #d6e0ff;
       border-radius: var(--radius);
-      padding: 32px;
-      text-align: center;
+      padding: 36px; text-align: center;
     }
-    .article-cta h3 { font-size: 18px; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
-    .article-cta p  { font-size: 14px; color: var(--slate); margin-bottom: 20px; }
+    .article-cta h3 {
+      font-size: 19px; font-weight: 700;
+      color: var(--navy); margin-bottom: 10px;
+    }
+    .article-cta p {
+      font-size: 14px; color: var(--slate);
+      margin-bottom: 22px; line-height: 1.65;
+    }
     .cta-btn {
       display: inline-block;
-      background: var(--navy);
-      color: #fff;
-      font-size: 14px;
-      font-weight: 600;
-      padding: 12px 24px;
-      border-radius: 8px;
+      background: var(--navy); color: #fff;
+      font-size: 14px; font-weight: 600;
+      padding: 13px 28px; border-radius: 8px;
       transition: background 0.15s;
     }
     .cta-btn:hover { background: #183268; }
 
-    /* ── FOOTER ───────────────────────────────────────────────────── */
+    /* ── FOOTER — mirrors main site exactly ─────────────────────── */
     .site-footer {
       background: var(--navy);
-      color: rgba(255,255,255,0.5);
-      padding: 48px 24px 32px;
+      color: rgba(255,255,255,0.48);
+      padding: 56px 24px 32px;
       font-size: 13px;
     }
     .footer-inner {
       max-width: var(--max-w);
       margin: 0 auto;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 32px;
-      justify-content: space-between;
+      display: flex; flex-wrap: wrap;
+      gap: 40px; justify-content: space-between;
       align-items: flex-start;
-      padding-bottom: 32px;
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-      margin-bottom: 24px;
+      padding-bottom: 40px;
+      border-bottom: 1px solid rgba(255,255,255,0.09);
+      margin-bottom: 28px;
     }
-    .footer-brand img { height: 28px; margin-bottom: 12px; filter: brightness(0) invert(1); opacity: 0.7; }
-    .footer-brand p   { font-size: 13px; max-width: 260px; line-height: 1.65; }
-    .footer-links { display: flex; gap: 48px; flex-wrap: wrap; }
+    .footer-brand img {
+      height: 28px; margin-bottom: 14px;
+      filter: brightness(0) invert(1); opacity: 0.65;
+    }
+    .footer-brand p {
+      font-size: 13px; max-width: 260px;
+      line-height: 1.7; color: rgba(255,255,255,0.48);
+    }
+    .footer-links { display: flex; gap: 56px; flex-wrap: wrap; }
     .footer-col h4 {
-      color: rgba(255,255,255,0.85);
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      margin-bottom: 14px;
+      color: rgba(255,255,255,0.82);
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      margin-bottom: 16px;
     }
     .footer-col a {
       display: block;
-      color: rgba(255,255,255,0.5);
-      font-size: 13px;
-      margin-bottom: 8px;
+      color: rgba(255,255,255,0.48);
+      font-size: 13px; margin-bottom: 10px;
       transition: color 0.15s;
     }
     .footer-col a:hover { color: rgba(255,255,255,0.9); }
     .footer-bottom {
-      max-width: var(--max-w);
-      margin: 0 auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 12px;
+      max-width: var(--max-w); margin: 0 auto;
+      display: flex; justify-content: space-between;
+      align-items: center; flex-wrap: wrap; gap: 12px;
     }
-    .footer-bottom a { color: rgba(255,255,255,0.4); transition: color 0.15s; }
+    .footer-bottom a {
+      color: rgba(255,255,255,0.4);
+      transition: color 0.15s;
+    }
     .footer-bottom a:hover { color: rgba(255,255,255,0.8); }
 
-    /* ── RESPONSIVE ───────────────────────────────────────────────── */
+    /* ── RESPONSIVE ──────────────────────────────────────────────── */
     @media (max-width: 640px) {
       .nav-links { display: none; }
-      .listing-grid { grid-template-columns: 1fr; }
-      .footer-links { gap: 28px; }
+      .listing-grid { grid-template-columns: 1fr; padding: 40px 16px 60px; }
+      .footer-links { gap: 32px; }
+      .article-wrap { padding: 40px 16px 60px; }
     }
   </style>
 </head>
 <body>
 
-  <!-- ─── SITE NAV ──────────────────────────────────────────────── -->
-  <nav class="nav">
-    <div class="nav-inner">
-      <a href="/" class="nav-logo">
-        <img src="/truckease-logo.png" alt="TruckEase Solutions" />
-      </a>
-      <ul class="nav-links">
-        <li><a href="/">Home</a></li>
-        <li><a href="/platform">Platform</a></li>
-        <li><a href="/services">Services</a></li>
-        <li><a href="/about">About</a></li>
-        <li><a href="/blog" class="active">Blog</a></li>
-        <li><a href="/contact">Contact</a></li>
-      </ul>
-      <a href="/free-review" class="nav-cta">Free Review</a>
-    </div>
-  </nav>
-
-  <!-- ─── LISTING VIEW ─────────────────────────────────────────── -->
-  <div id="view-listing">
-    <div class="listing-hero">
-      <span class="eyebrow">Resources & Guides</span>
-      <h1>Compliance made clear.</h1>
-      <p>Plain-language guides on IFTA, DOT authority, driver qualification, and cross-border compliance — written for carriers who run operations without a dedicated compliance team.</p>
-    </div>
-
-    <div class="listing-grid" id="article-grid">
-      <!-- Cards injected by JS -->
-    </div>
+<!-- ── NAV (Blog deliberately excluded — footer only) ──────────── -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="https://truckeasesolutions.com/" class="nav-logo">
+      <img src="/truckease-logo.png" alt="TruckEase Solutions" />
+    </a>
+    <ul class="nav-links">
+      <li><a href="https://truckeasesolutions.com/">Home</a></li>
+      <li><a href="https://truckeasesolutions.com/platform">Platform</a></li>
+      <li><a href="https://truckeasesolutions.com/services">Services</a></li>
+      <li><a href="https://truckeasesolutions.com/about">About</a></li>
+      <li><a href="https://truckeasesolutions.com/contact">Contact</a></li>
+    </ul>
+    <a href="https://truckeasesolutions.com/free-review" class="nav-cta">Free Review</a>
   </div>
+</nav>
 
-  <!-- ─── ARTICLE VIEW ─────────────────────────────────────────── -->
-  <div id="view-article">
-    <div class="article-wrap">
-      <div class="back-btn" id="back-btn" onclick="showListing()">All articles</div>
-      <div class="article-eyebrow" id="art-category"></div>
-      <h1 class="article-h1" id="art-title"></h1>
-      <div class="article-byline" id="art-byline"></div>
-      <div class="article-body" id="art-body"></div>
-      <div class="article-cta" id="art-cta"></div>
-    </div>
+<!-- ── LISTING VIEW ─────────────────────────────────────────────── -->
+<div id="view-listing">
+  <div class="listing-hero">
+    <span class="eyebrow">Resources & Guides</span>
+    <h1>Compliance made clear.</h1>
+    <p>Plain-language guides on IFTA, DOT authority, driver qualification,
+       and cross-border compliance — for carriers across the US and Canada.</p>
   </div>
+  <div class="listing-grid" id="article-grid"><!-- cards injected by JS --></div>
+</div>
 
-  <!-- ─── SITE FOOTER ───────────────────────────────────────────── -->
-  <footer class="site-footer">
-    <div class="footer-inner">
-      <div class="footer-brand">
-        <img src="/truckease-logo.png" alt="TruckEase Solutions" />
-        <p>Compliance infrastructure for carriers across the US and Canada.</p>
+<!-- ── ARTICLE VIEW ─────────────────────────────────────────────── -->
+<div id="view-article">
+  <div class="article-wrap">
+    <button class="back-btn" id="back-btn" onclick="showListing()">All articles</button>
+    <div class="article-eyebrow" id="art-category"></div>
+    <h1 class="article-h1"   id="art-title"></h1>
+    <div class="article-byline" id="art-byline"></div>
+    <div class="article-body"   id="art-body"></div>
+    <div class="article-cta"    id="art-cta"></div>
+  </div>
+</div>
+
+<!-- ── SITE FOOTER — matches main site ─────────────────────────── -->
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <img src="/truckease-logo.png" alt="TruckEase Solutions" />
+      <p>Compliance infrastructure for carriers across the US and Canada.</p>
+    </div>
+    <nav class="footer-links">
+      <div class="footer-col">
+        <h4>Platform</h4>
+        <a href="https://truckeasesolutions.com/platform">Overview</a>
+        <a href="https://truckeasesolutions.com/services">Services</a>
+        <a href="https://truckeasesolutions.com/free-review">Free Review</a>
       </div>
-      <nav class="footer-links">
-        <div class="footer-col">
-          <h4>Platform</h4>
-          <a href="/platform">Overview</a>
-          <a href="/services">Services</a>
-          <a href="/free-review">Free Review</a>
-        </div>
-        <div class="footer-col">
-          <h4>Company</h4>
-          <a href="/about">About</a>
-          <a href="/blog">Blog</a>
-          <a href="/contact">Contact</a>
-        </div>
-      </nav>
-    </div>
-    <div class="footer-bottom">
-      <span>© 2025 TruckEase Solutions Inc. All rights reserved.</span>
-      <span>support@truckeasesolutions.com</span>
-    </div>
-  </footer>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="https://truckeasesolutions.com/about">About</a>
+        <a href="/blog">Blog</a>
+        <a href="https://truckeasesolutions.com/contact">Contact</a>
+      </div>
+    </nav>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 TruckEase Solutions Inc. All rights reserved.</span>
+    <a href="mailto:support@truckeasesolutions.com">support@truckeasesolutions.com</a>
+  </div>
+</footer>
 
-  <!-- ─── BLOG ENGINE ───────────────────────────────────────────── -->
-  <script>
-    // ══════════════════════════════════════════════════════════════
-    // ARTICLE LIBRARY
-    // To add a new article: add a new entry to ARTICLES below.
-    // id must be URL-safe (lowercase, hyphens only).
-    // ══════════════════════════════════════════════════════════════
-    const ARTICLES = [
-      {
-        id: "ifta-quarterly-filing-guide",
-        title: "Demystifying IFTA: A Step-by-Step Filing Guide for Cross-Border Carriers",
-        category: "Compliance Guides",
-        teaser: "IFTA filings trip up even experienced operators. Here's exactly what you need to track each quarter to file cleanly and avoid the most common audit triggers.",
-        readTime: "6 min read",
-        cta: {
-          heading: "Not confident about your IFTA filings?",
-          body: "We'll review your current compliance posture at no cost — including filing currency and authority status.",
-          label: "Get a Free Compliance Review",
-          href: "/free-review"
-        },
-        body: `
-          <p>The International Fuel Tax Agreement (IFTA) is one of the most consistently mishandled compliance requirements in commercial trucking. The concept is straightforward — report fuel purchased and miles driven in each jurisdiction, pay the net tax owed — but in practice, gaps in record-keeping create problems that take months to unravel during an audit.</p>
-
-          <h2>1. Do you need an IFTA license?</h2>
-          <p>If you operate a qualified motor vehicle across two or more IFTA jurisdictions (US states and Canadian provinces), you are required to register. A vehicle qualifies if it has:</p>
-          <ul>
-            <li>Two axles and a gross vehicle weight exceeding 26,000 lbs, or</li>
-            <li>Three or more axles regardless of weight</li>
-          </ul>
-          <p>If that describes your operation and you're crossing state or provincial lines, IFTA registration isn't optional.</p>
-
-          <h2>2. The two datasets your filing lives or dies on</h2>
-          <p>Every IFTA return reconciles two things: miles traveled per jurisdiction and gallons purchased per jurisdiction. Both numbers need to be exact, and they need to match your supporting records.</p>
-          <div class="callout">
-            <p><strong>Audit trigger:</strong> Gaps between your odometer readings at jurisdiction border crossings and your total quarterly mileage are the number one flag that triggers an automated compliance audit. If your log shows 14,000 miles but your jurisdiction breakdown only accounts for 12,800, you have a problem that needs to be explained before the form is filed, not after.</p>
-          </div>
-
-          <h2>3. What counts as "fuel purchased"</h2>
-          <p>IFTA counts taxable fuel purchased in each jurisdiction — not fuel consumed. If you filled up in Texas but drove that fuel across Oklahoma and Kansas, the purchase goes to Texas. What matters for the tax calculation is where you bought it versus where you burned it. This is why fuel receipts tied to a specific location are non-negotiable; a credit card statement showing an amount is not sufficient documentation on its own.</p>
-
-          <h2>4. Quarterly deadlines</h2>
-          <p>IFTA returns are due on the last day of the month following each quarter: January 31, April 30, July 31, and October 31. Late filing penalties start immediately — most jurisdictions charge $50 or 10% of the net tax owed, whichever is greater. There's no grace period.</p>
-
-          <h2>5. The record-keeping standard that matters</h2>
-          <p>IFTA jurisdictions can audit your filings for up to four years. During an audit, you need to produce trip records showing date, origin, destination, route, odometer readings at each jurisdiction border, total trip distance, and fuel receipts for every purchase. If your records exist only in a driver's memory or a handwritten notebook, you are not audit-ready.</p>
-
-          <h2>6. Cross-border carriers: Canadian jurisdictions</h2>
-          <p>If you operate into Canadian provinces, those provinces are included in your IFTA return under the same rules. Fuel purchased in Canada is reported in litres; miles driven in Canada are reported in kilometres. Your IFTA base jurisdiction handles the conversion and the inter-jurisdictional settlement — but you still need clean records for every crossing.</p>
-        `
+<!-- ── BLOG ENGINE ───────────────────────────────────────────────── -->
+<script>
+  // ═══════════════════════════════════════════════════════════════
+  // ARTICLE LIBRARY
+  // Add new articles by adding objects to this array.
+  // id: URL-safe string (lowercase, hyphens only)
+  // ═══════════════════════════════════════════════════════════════
+  const ARTICLES = [
+    {
+      id: "ifta-quarterly-filing-guide",
+      title: "Demystifying IFTA: A Step-by-Step Filing Guide for Cross-Border Carriers",
+      category: "Compliance Guides",
+      teaser: "IFTA filings trip up even experienced operators. Here's exactly what you need to track each quarter to file cleanly and avoid the most common audit triggers.",
+      readTime: "6 min read",
+      cta: {
+        heading: "Not confident about your IFTA filings?",
+        body: "We'll review your current compliance posture at no cost — including filing currency and authority status.",
+        label: "Get a Free Compliance Review",
+        href: "https://truckeasesolutions.com/free-review"
       },
-      {
-        id: "nsc-safety-audit-preparation",
-        title: "How to Prepare Your Fleet for an NSC Safety Audit",
-        category: "Audit Readiness",
-        teaser: "NSC audits don't announce themselves far in advance. The carriers that pass cleanly are the ones whose records are already in order — not the ones who scrambled in the week before.",
-        readTime: "5 min read",
-        cta: {
-          heading: "Not sure where your compliance gaps are?",
-          body: "A free review of your public profile — safety score, authority status, and filing currency — takes minutes and costs nothing.",
-          label: "Get a Free Compliance Review",
-          href: "/free-review"
-        },
-        body: `
-          <p>A National Safety Code audit isn't a test you study for in advance. It's a verification of what you've already been doing. Carriers with clean, current records walk through NSC audits. Carriers with gaps spend weeks scrambling to reconstruct records that should have existed all along.</p>
+      body: `
+        <p>The International Fuel Tax Agreement (IFTA) is one of the most consistently mishandled compliance requirements in commercial trucking. The concept is straightforward — report fuel purchased and miles driven in each jurisdiction, pay the net tax owed — but in practice, gaps in record-keeping create problems that take months to unravel during an audit.</p>
 
-          <h2>What auditors are checking</h2>
-          <p>NSC safety audits assess whether your operation is meeting the federal and provincial requirements for commercial vehicle safety. The core areas are:</p>
-          <ul>
-            <li>Driver qualification files (licenses, medicals, abstracts, training records)</li>
-            <li>Hours of service logs — accuracy and retention</li>
-            <li>Vehicle maintenance records and pre-trip inspection logs</li>
-            <li>Accident register and collision history</li>
-            <li>Safety management practices</li>
-          </ul>
-          <p>Auditors aren't looking for perfection. They're looking for evidence that you have a system and that you follow it consistently. A single missed medical renewal, properly documented and corrected, is different from a pattern of missing medicals across your driver file.</p>
+        <h2>1. Do you need an IFTA license?</h2>
+        <p>If you operate a qualified motor vehicle across two or more IFTA jurisdictions (US states and Canadian provinces), registration is required. A vehicle qualifies if it has:</p>
+        <ul>
+          <li>Two axles and a gross vehicle weight exceeding 26,000 lbs, or</li>
+          <li>Three or more axles regardless of weight</li>
+        </ul>
+        <p>If that describes your operation and you're crossing state or provincial lines, IFTA registration isn't optional.</p>
 
-          <h2>Driver qualification files</h2>
-          <p>Every driver on your roster needs a complete qualification file. That includes a current medical certificate, a valid commercial licence, a motor vehicle abstract obtained within the past year, and documentation of any required training. Files need to be kept current — a medical that expired six months ago is not a minor administrative issue during an NSC audit.</p>
+        <h2>2. The two datasets your filing depends on</h2>
+        <p>Every IFTA return reconciles two things: miles traveled per jurisdiction and gallons purchased per jurisdiction. Both numbers need to be exact, and they need to match your supporting records.</p>
+        <div class="callout">
+          <p><strong>Audit trigger:</strong> Gaps between your odometer readings at jurisdiction border crossings and your total quarterly mileage are the most common flag that triggers an automated compliance audit. If your log shows 14,000 miles but your jurisdiction breakdown only accounts for 12,800, that discrepancy needs to be resolved before the form is filed — not after.</p>
+        </div>
 
-          <h2>Hours of service records</h2>
-          <p>Log books or ELD records need to be retained for a minimum of six months. Auditors will cross-reference driving hours against fuel records and toll receipts. If a driver's log shows a rest period but a fuel receipt places the truck 400 kilometres away at the same time, that discrepancy will be flagged and investigated.</p>
+        <h2>3. What counts as "fuel purchased"</h2>
+        <p>IFTA counts taxable fuel purchased in each jurisdiction — not fuel consumed. If you filled up in Texas but drove that fuel across Oklahoma and Kansas, the purchase goes to Texas. Fuel receipts tied to a specific location are non-negotiable documentation. A credit card statement showing an amount is not sufficient on its own.</p>
 
-          <div class="callout">
-            <p><strong>Common gap:</strong> Many smaller operations keep driver logs but don't retain the corresponding supporting documents — fuel receipts, bills of lading, border crossing records — that auditors use to verify them. Logs without supporting documentation are difficult to defend.</p>
-          </div>
+        <h2>4. Quarterly deadlines</h2>
+        <p>IFTA returns are due on the last day of the month following each quarter: January 31, April 30, July 31, and October 31. Late filing penalties start immediately — most jurisdictions charge $50 or 10% of the net tax owed, whichever is greater.</p>
 
-          <h2>Maintenance records</h2>
-          <p>Every scheduled maintenance interval needs a record. Every repair needs a record. Pre-trip inspection reports need to be completed daily and retained. The standard is a system, not perfection — auditors understand that equipment breaks down. What they're looking for is evidence that you caught it, documented it, and fixed it before the truck went back on the road.</p>
+        <h2>5. The record-keeping standard that matters</h2>
+        <p>IFTA jurisdictions can audit your filings for up to four years. During an audit, you need to produce trip records showing date, origin, destination, route, odometer readings at each jurisdiction border, total trip distance, and fuel receipts for every purchase. Records that exist only in a driver's memory or a handwritten notebook are not audit-ready.</p>
 
-          <h2>Your safety rating and what it means</h2>
-          <p>Your NSC safety rating — Satisfactory, Conditional, or Unsatisfactory — affects your insurance premiums, your shippers' willingness to work with you, and in some cases your operating authority itself. A Conditional rating triggers additional oversight. An Unsatisfactory rating can result in an out-of-service order.</p>
-          <p>The rating is based on your audit results, your collision history, and your roadside inspection record. The time to address gaps is before the auditor arrives, not during the audit.</p>
-        `
-      }
-    ];
+        <h2>6. Cross-border carriers: Canadian jurisdictions</h2>
+        <p>Canadian provinces are included in your IFTA return under the same rules. Fuel purchased in Canada is reported in litres; kilometres replace miles. Your IFTA base jurisdiction handles the conversion and inter-jurisdictional settlement — but you still need clean records for every crossing.</p>
+      `
+    },
+    {
+      id: "nsc-safety-audit-preparation",
+      title: "How to Prepare Your Fleet for an NSC Safety Audit",
+      category: "Audit Readiness",
+      teaser: "NSC audits don't announce themselves far in advance. Carriers that pass cleanly are the ones whose records were already in order — not the ones who scrambled in the week before.",
+      readTime: "5 min read",
+      cta: {
+        heading: "Not sure where your compliance gaps are?",
+        body: "A free review of your authority status, safety score, and filing currency takes minutes and costs nothing.",
+        label: "Get a Free Compliance Review",
+        href: "https://truckeasesolutions.com/free-review"
+      },
+      body: `
+        <p>A National Safety Code audit isn't a test you study for in advance. It's a verification of what you've already been doing. Carriers with clean, current records move through NSC audits. Carriers with gaps spend weeks reconstructing records that should have existed all along.</p>
 
-    // ══════════════════════════════════════════════════════════════
-    // ROUTING & RENDER
-    // ══════════════════════════════════════════════════════════════
+        <h2>What auditors are checking</h2>
+        <p>NSC safety audits assess whether your operation meets federal and provincial requirements for commercial vehicle safety. The core areas are:</p>
+        <ul>
+          <li>Driver qualification files — licences, medicals, abstracts, training records</li>
+          <li>Hours of service logs — accuracy and retention</li>
+          <li>Vehicle maintenance records and pre-trip inspection logs</li>
+          <li>Accident register and collision history</li>
+          <li>Safety management practices</li>
+        </ul>
+        <p>Auditors aren't looking for perfection. They're looking for evidence that you have a system and that you follow it consistently. A single missed medical renewal, properly documented and corrected, is different from a pattern of missing medicals across your driver files.</p>
 
-    function getArticleId() {
-      return new URLSearchParams(window.location.search).get('article');
+        <h2>Driver qualification files</h2>
+        <p>Every driver needs a complete qualification file: a current medical certificate, a valid commercial licence, a motor vehicle abstract obtained within the past year, and documentation of any required training. A medical that expired six months ago is not a minor administrative issue during an NSC audit.</p>
+
+        <h2>Hours of service records</h2>
+        <p>Log books or ELD records need to be retained for a minimum of six months. Auditors will cross-reference driving hours against fuel records and toll receipts. If a driver's log shows a rest period but a fuel receipt places the vehicle 400 kilometres away at the same time, that discrepancy will be investigated.</p>
+
+        <div class="callout">
+          <p><strong>Common gap:</strong> Many operations keep driver logs but don't retain the corresponding supporting documents — fuel receipts, bills of lading, border crossing records — that auditors use to verify them. Logs without supporting documentation are difficult to defend.</p>
+        </div>
+
+        <h2>Maintenance records</h2>
+        <p>Every scheduled maintenance interval needs a record. Every repair needs a record. Pre-trip inspection reports need to be completed daily and retained. The standard is a system, not perfection — auditors understand equipment breaks down. What they're looking for is evidence that you caught it, documented it, and fixed it before the vehicle went back on the road.</p>
+
+        <h2>Your safety rating and what it means</h2>
+        <p>Your NSC safety rating — Satisfactory, Conditional, or Unsatisfactory — affects insurance premiums, shipper relationships, and in some cases your operating authority itself. A Conditional rating triggers additional oversight. An Unsatisfactory rating can result in an out-of-service order. The time to address gaps is before the auditor arrives.</p>
+      `
     }
+  ];
 
-    function showListing() {
-      history.pushState({}, '', '/blog');
-      document.getElementById('view-listing').style.display = 'block';
-      document.getElementById('view-article').style.display  = 'none';
-      window.scrollTo(0, 0);
-      setListingMeta();
-    }
+  // ── Routing ──────────────────────────────────────────────────────
+  function getArticleId() {
+    return new URLSearchParams(window.location.search).get('article');
+  }
 
-    function showArticle(id) {
-      const article = ARTICLES.find(a => a.id === id);
-      if (!article) { showListing(); return; }
+  function showListing() {
+    history.pushState({}, '', '/blog');
+    document.getElementById('view-listing').style.display = 'block';
+    document.getElementById('view-article').style.display = 'none';
+    window.scrollTo(0, 0);
+    setListingMeta();
+  }
 
-      history.pushState({}, '', '/blog?article=' + id);
-      document.getElementById('view-listing').style.display = 'none';
-      document.getElementById('view-article').style.display  = 'block';
-      window.scrollTo(0, 0);
+  function showArticle(id) {
+    const article = ARTICLES.find(a => a.id === id);
+    if (!article) { showListing(); return; }
 
-      // Populate article fields
-      document.getElementById('art-category').textContent = article.category;
-      document.getElementById('art-title').textContent    = article.title;
-      document.getElementById('art-byline').textContent   = article.readTime + ' · TruckEase Compliance Team';
-      document.getElementById('art-body').innerHTML       = article.body;
-      document.getElementById('art-cta').innerHTML = `
-        <h3>${article.cta.heading}</h3>
-        <p>${article.cta.body}</p>
-        <a href="${article.cta.href}" class="cta-btn">${article.cta.label}</a>
-      `;
+    history.pushState({}, '', '/blog?article=' + id);
+    document.getElementById('view-listing').style.display = 'none';
+    document.getElementById('view-article').style.display  = 'block';
+    window.scrollTo(0, 0);
 
-      // Update meta
-      document.title = article.title + ' | TruckEase Blog';
-      document.getElementById('meta-description').setAttribute('content',
-        article.teaser);
-      document.getElementById('og-title').setAttribute('content', article.title);
-      document.getElementById('og-desc').setAttribute('content', article.teaser);
-      document.getElementById('canonical-link').setAttribute('href',
-        'https://truckeasesolutions.com/blog?article=' + id);
-    }
+    document.getElementById('art-category').textContent = article.category;
+    document.getElementById('art-title').textContent    = article.title;
+    document.getElementById('art-byline').textContent   = article.readTime + ' · TruckEase Compliance Team';
+    document.getElementById('art-body').innerHTML       = article.body;
+    document.getElementById('art-cta').innerHTML = `
+      <h3>${article.cta.heading}</h3>
+      <p>${article.cta.body}</p>
+      <a href="${article.cta.href}" class="cta-btn">${article.cta.label}</a>
+    `;
 
-    function setListingMeta() {
-      document.title = 'TruckEase | Compliance Guides & Resources';
-      document.getElementById('meta-description').setAttribute('content',
-        'Plain-language guides on IFTA, DOT compliance, driver qualification, and fleet record-keeping — written for carriers across the US and Canada.');
-      document.getElementById('og-title').setAttribute('content', 'TruckEase Blog | Compliance Guides for Carriers');
-      document.getElementById('canonical-link').setAttribute('href',
-        'https://truckeasesolutions.com/blog');
-    }
+    // Per-article meta
+    document.title = article.title + ' | TruckEase Blog';
+    document.getElementById('meta-description')
+            .setAttribute('content', article.teaser);
+    document.getElementById('og-title')
+            .setAttribute('content', article.title + ' | TruckEase Blog');
+    document.getElementById('og-desc')
+            .setAttribute('content', article.teaser);
+    document.getElementById('canonical-link')
+            .setAttribute('href', 'https://truckeasesolutions.com/blog?article=' + id);
+  }
 
-    function buildGrid() {
-      const grid = document.getElementById('article-grid');
-      grid.innerHTML = ARTICLES.map(a => `
-        <article class="article-card" onclick="showArticle('${a.id}')" role="link" tabindex="0"
-                 onkeydown="if(event.key==='Enter')showArticle('${a.id}')">
-          <div class="card-category">${a.category}</div>
-          <div class="card-title">${a.title}</div>
-          <div class="card-teaser">${a.teaser}</div>
-          <div class="card-meta">
-            <span>${a.readTime}</span>
-            <span class="read-more">Read</span>
-          </div>
-        </article>
-      `).join('');
-    }
+  function setListingMeta() {
+    document.title = 'TruckEase | Compliance Guides & Resources';
+    document.getElementById('meta-description')
+            .setAttribute('content', 'Plain-language compliance guides for carriers across the US and Canada — IFTA, DOT filings, driver qualification, audit readiness.');
+    document.getElementById('og-title')
+            .setAttribute('content', 'TruckEase Blog | Compliance Guides for Carriers');
+    document.getElementById('canonical-link')
+            .setAttribute('href', 'https://truckeasesolutions.com/blog');
+  }
 
-    // ── Init ──
-    buildGrid();
+  function buildGrid() {
+    document.getElementById('article-grid').innerHTML = ARTICLES.map(a => `
+      <article class="article-card"
+               role="link" tabindex="0"
+               onclick="showArticle('${a.id}')"
+               onkeydown="if(event.key==='Enter')showArticle('${a.id}')">
+        <div class="card-category">${a.category}</div>
+        <div class="card-title">${a.title}</div>
+        <div class="card-teaser">${a.teaser}</div>
+        <div class="card-meta">
+          <span>${a.readTime}</span>
+          <span class="read-more">Read</span>
+        </div>
+      </article>
+    `).join('');
+  }
 
+  // ── Init ─────────────────────────────────────────────────────────
+  buildGrid();
+  const initId = getArticleId();
+  if (initId) showArticle(initId);
+  else setListingMeta();
+
+  // Browser back/forward
+  window.addEventListener('popstate', () => {
     const id = getArticleId();
-    if (id) {
-      showArticle(id);
-    } else {
-      setListingMeta();
-    }
-
-    // Handle back/forward navigation
-    window.addEventListener('popstate', () => {
-      const id = getArticleId();
-      if (id) showArticle(id);
-      else showListing();
-    });
-  </script>
+    if (id) showArticle(id);
+    else showListing();
+  });
+</script>
 </body>
 </html>
