@@ -22,33 +22,33 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- ═══════════════════════════════════════════════
-         STATIC FALLBACK META (homepage defaults)
-         Per-page values are injected by the script below.
-         ═══════════════════════════════════════════════ -->
-    <title>TruckEase | Trucking Compliance Technology for US & Canadian Carriers</title>
+    <!-- ═══════════════════════════════════════════
+         STATIC FALLBACK META — homepage defaults
+         All per-route values injected by script below
+         ═══════════════════════════════════════════ -->
+    <title>TruckEase | Trucking Compliance Technology — US & Canada</title>
+
     <meta name="description"
           id="meta-description"
-          content="TruckEase gives carriers the compliance infrastructure that large fleets take for granted — automated, auditable, and always current. Serving the US and Canada." />
+          content="TruckEase gives every carrier the compliance infrastructure that large fleets take for granted — automated, auditable, and always current. Serving the US and Canada." />
+
     <meta name="robots" content="index, follow" />
 
     <!-- Open Graph -->
     <meta property="og:title"
           content="TruckEase | Trucking Compliance Technology" />
     <meta property="og:description"
-          content="Automated compliance infrastructure for carriers across the US and Canada. IFTA, IRP, DOT filings, driver records — tracked and handled." />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://truckeasesolutions.com" />
-    <meta property="og:image" content="https://truckeasesolutions.com/opengraph.jpg" />
+          content="Automated compliance infrastructure for carriers across the US and Canada. IFTA, IRP, DOT filings, driver records — tracked, handled, audit-ready." />
+    <meta property="og:type"    content="website" />
+    <meta property="og:url"     content="https://truckeasesolutions.com" />
+    <meta property="og:image"   content="https://truckeasesolutions.com/opengraph.jpg" />
 
     <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title"
-          content="TruckEase | Trucking Compliance Technology" />
-    <meta name="twitter:description"
-          content="Automated compliance infrastructure for carriers across the US and Canada. IFTA, IRP, DOT filings, driver records — tracked and handled." />
+    <meta name="twitter:card"        content="summary_large_image" />
+    <meta name="twitter:title"       content="TruckEase | Trucking Compliance Technology" />
+    <meta name="twitter:description" content="Automated compliance infrastructure for carriers across the US and Canada. IFTA, IRP, DOT filings, driver records — tracked, handled, audit-ready." />
 
-    <!-- Canonical (updated dynamically per route below) -->
+    <!-- Canonical (updated per route by script) -->
     <link id="canonical-link" rel="canonical" href="https://truckeasesolutions.com" />
 
     <!-- Organization Schema -->
@@ -66,16 +66,17 @@
     }
     </script>
 
-    <!-- Dynamic FAQ schema slot (populated per route) -->
+    <!-- Dynamic FAQ schema slot -->
     <script id="faq-schema" type="application/ld+json"></script>
 
     <!-- Favicon & Fonts -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+          rel="stylesheet" />
 
-    <!-- App bundle -->
+    <!-- React app bundle -->
     <script type="module" crossorigin src="/assets/index-CCAkJrgf.js"></script>
     <link rel="stylesheet" crossorigin href="/assets/index-LoHatKut.css" />
   </head>
@@ -84,35 +85,37 @@
     <div id="root"></div>
 
     <script>
-      // ─────────────────────────────────────────────────────────────
-      // PER-ROUTE META CONFIGURATION
-      // Rules applied here:
-      //   • No fleet-size numbers (no "1–10 trucks", "small fleets")
-      //   • No "back office" language
-      //   • US listed before Canada everywhere
-      //   • "compliance technology" / "automated" replaces service-bureau framing
-      //   • No roadmap or mechanism language — outcomes and confidence only
-      // ─────────────────────────────────────────────────────────────
+      // ─────────────────────────────────────────────────────────────────
+      // PER-ROUTE META — applied on every navigation
+      //
+      // Philosophy rules encoded here:
+      //   ✓ US listed before Canada everywhere, without exception
+      //   ✓ No fleet-size numbers (no "1–10 trucks", no "small fleets")
+      //   ✓ No "back office" language anywhere
+      //   ✓ Problem-framed, not customer-category-framed
+      //   ✓ "Compliance technology" / "automated" — not service-bureau framing
+      //   ✓ No roadmap or mechanism language — outcomes and confidence only
+      // ─────────────────────────────────────────────────────────────────
       const metaData = {
         "/": {
-          title: "TruckEase | Trucking Compliance Technology for US & Canadian Carriers",
-          desc: "TruckEase gives carriers the compliance infrastructure that large fleets take for granted — automated, auditable, and always current. Serving the US and Canada."
+          title: "TruckEase | Trucking Compliance Technology — US & Canada",
+          desc:  "TruckEase gives every carrier the compliance infrastructure that large fleets take for granted — automated, auditable, and always current. Serving the US and Canada."
         },
         "/platform": {
           title: "Compliance Platform for Carriers | TruckEase",
-          desc: "One dashboard for DOT authority status, document storage, renewal alerts, and driver records. Built to catch what manual processes miss."
+          desc:  "One dashboard for DOT authority status, document storage, renewal alerts, and driver records. Built to catch what manual processes miss — for carriers across the US and Canada."
         },
         "/services": {
           title: "Trucking Compliance Services — IFTA, IRP, DOT, Driver Files | TruckEase",
-          desc: "Managed IFTA filing, IRP registration, driver qualification files, and authority maintenance for carriers across the US and Canada."
+          desc:  "Managed IFTA filing, IRP registration, driver qualification files, and authority maintenance. Handled accurately, tracked automatically — for carriers across the US and Canada."
         },
         "/about": {
-          title: "About TruckEase | Compliance Technology Built for Carriers",
-          desc: "TruckEase exists because compliance doesn't get easier just because you don't have a compliance department. We close that gap — with technology."
+          title: "About TruckEase | Compliance Technology Built for Every Carrier",
+          desc:  "TruckEase exists because compliance doesn't get simpler just because you don't have a compliance department. We close that gap — with technology, not paperwork."
         },
         "/contact": {
           title: "Contact TruckEase | Speak Directly with Compliance Specialists",
-          desc: "Questions about IFTA, DOT filings, CVOR, or cross-border compliance? Reach TruckEase directly. We respond within 1 business day.",
+          desc:  "Questions about IFTA, DOT filings, CVOR, or cross-border compliance? Reach TruckEase directly. We respond within 1 business day.",
           faq: {
             "@context": "https://schema.org",
             "@type": "FAQPage",
@@ -122,7 +125,7 @@
                 "name": "What types of carriers does TruckEase work with?",
                 "acceptedAnswer": {
                   "@type": "Answer",
-                  "text": "TruckEase works with carriers of all sizes that need reliable compliance infrastructure — from independent owner-operators to growing fleets. If you're managing compliance without a dedicated department, we're built for you."
+                  "text": "TruckEase works with carriers across the US and Canada who need reliable compliance infrastructure — from independent owner-operators to growing fleets. If you're managing compliance without a dedicated department, we're built for you."
                 }
               },
               {
@@ -146,11 +149,7 @@
         },
         "/free-review": {
           title: "Free Compliance Review for Carriers | TruckEase",
-          desc: "Get a free review of your DOT, MC, NSC, or CVOR profile. We check your authority status, filing currency, and safety score — no commitment required."
-        },
-        "/blog": {
-          title: "Trucking Compliance Guides & Resources | TruckEase Blog",
-          desc: "Plain-language guides on IFTA, DOT compliance, driver qualification, and fleet record-keeping — written for carriers who run operations without a compliance department."
+          desc:  "Get a free review of your DOT, MC, NSC, or CVOR profile. We check your authority status, filing currency, and safety score — no commitment required."
         }
       };
 
@@ -158,30 +157,26 @@
         const path = window.location.pathname;
         const data = metaData[path] || metaData["/"];
 
-        // Title
         document.title = data.title;
 
-        // Standard description
         const descMeta = document.getElementById("meta-description");
         if (descMeta) descMeta.setAttribute("content", data.desc);
 
-        // Canonical
         const canonicalLink = document.getElementById("canonical-link");
         if (canonicalLink) {
           canonicalLink.setAttribute("href", "https://truckeasesolutions.com" + path);
         }
 
-        // FAQ schema (contact page only)
         const faqScript = document.getElementById("faq-schema");
         if (faqScript) {
           faqScript.textContent = data.faq ? JSON.stringify(data.faq) : "";
         }
 
-        // Inject blog link into footer if missing
-        injectBlogLink();
+        // Blog link lives in footer only — injected here
+        injectBlogFooterLink();
       }
 
-      function injectBlogLink() {
+      function injectBlogFooterLink() {
         setTimeout(() => {
           if (document.getElementById("dynamic-blog-link")) return;
 
@@ -196,8 +191,8 @@
 
           if (contactLink && contactLink.parentNode) {
             const blogLink = document.createElement("a");
-            blogLink.id = "dynamic-blog-link";
-            blogLink.href = "/blog";
+            blogLink.id        = "dynamic-blog-link";
+            blogLink.href      = "/blog";
             blogLink.className = "text-slate-400 hover:text-white transition text-sm block mt-2";
             blogLink.innerText = "Blog";
             contactLink.parentNode.insertBefore(blogLink, contactLink.nextSibling);
