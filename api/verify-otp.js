@@ -1,17 +1,9 @@
-// Shared in-memory store — must match send-otp.js
-// In a multi-instance/serverless environment, use Vercel KV or Upstash Redis instead.
-// This works correctly for Vercel's single-region serverless as long as both
-// handlers share the same module cache (they do within one deployment).
+// Shared in-memory store with send-otp.js (same module cache within one Vercel deployment)
 const otpStore = new Map();
 
 export default async function handler(req, res) {
-  if (req.method === 'OPTIONS') {
-    return res.status(200).end();
-  }
-
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
-  }
+  if (req.method === 'OPTIONS') return res.status(200).end();
+  if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
   const { email, otp } = req.body || {};
 
@@ -20,25 +12,29 @@ export default async function handler(req, res) {
   }
 
   const normalizedEmail = email.toLowerCase().trim();
-  const submittedCode = String(otp).trim();
-
-  const stored = otpStore.get(normalizedEmail);
+  const submittedCode   = String(otp).trim();
+  const stored          = otpStore.get(normalizedEmail);
 
   if (!stored) {
-    return res.status(400).json({ error: 'No verification code found for this email. Please request a new one.' });
+    return res.status(400).json({
+      error: 'No verification code found for this email. Please request a new one.'
+    });
   }
 
   if (stored.expiresAt < Date.now()) {
     otpStore.delete(normalizedEmail);
-    return res.status(400).json({ error: 'Your verification code has expired. Please request a new one.' });
+    return res.status(400).json({
+      error: 'Your verification code has expired. Please request a new one.'
+    });
   }
 
   if (stored.code !== submittedCode) {
-    return res.status(400).json({ error: 'Incorrect verification code. Please check and try again.' });
+    return res.status(400).json({
+      error: 'Incorrect verification code. Please check and try again.'
+    });
   }
 
-  // Code is valid — consume it immediately to prevent reuse
+  // Valid — consume immediately to prevent reuse
   otpStore.delete(normalizedEmail);
-
   return res.status(200).json({ success: true, message: 'Email verified successfully.' });
 }
