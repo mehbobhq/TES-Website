@@ -1,13 +1,8 @@
 {
   "cleanUrls": true,
   "rewrites": [
-    { "source": "/api/(.*)", "destination": "/api/$1" },
-    { "source": "/blog", "destination": "/blog.html" },
-    { "source": "/contact", "destination": "/index.html" },
-    { "source": "/platform", "destination": "/index.html" },
-    { "source": "/services", "destination": "/index.html" },
-    { "source": "/about", "destination": "/index.html" },
-    { "source": "/free-review", "destination": "/index.html" }
+    { "source": "/api/:path*", "destination": "/api/:path*" },
+    { "source": "/:path*", "destination": "/index.html" }
   ],
   "headers": [
     {
