@@ -1,29 +1,22 @@
-// In-memory OTP store: { email -> { code, expiresAt } }
-// Note: This resets on cold starts. For production, replace with
-// a persistent KV store (e.g. Vercel KV / Redis / Upstash).
+// In-memory OTP store: email -> { code, expiresAt }
+// Works correctly for Vercel single-region serverless.
+// For multi-region or high traffic: replace with Vercel KV or Upstash Redis.
 const otpStore = new Map();
-
 const OTP_TTL_MS = 10 * 60 * 1000; // 10 minutes
 
 export default async function handler(req, res) {
-  // Handle preflight CORS
-  if (req.method === 'OPTIONS') {
-    return res.status(200).end();
-  }
-
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
-  }
+  if (req.method === 'OPTIONS') return res.status(200).end();
+  if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
   const { email } = req.body || {};
 
   if (!email || typeof email !== 'string' || !email.includes('@')) {
-    return res.status(400).json({ error: 'A valid email address is required' });
+    return res.status(400).json({ error: 'A valid email address is required.' });
   }
 
   const normalizedEmail = email.toLowerCase().trim();
 
-  // Rate-limit: block if a valid unexpired OTP already exists for this email
+  // Rate-limit: block if an unexpired OTP already exists
   const existing = otpStore.get(normalizedEmail);
   if (existing && existing.expiresAt > Date.now()) {
     const secondsLeft = Math.ceil((existing.expiresAt - Date.now()) / 1000);
@@ -32,20 +25,17 @@ export default async function handler(req, res) {
     });
   }
 
-  // Generate a 6-digit OTP
+  // Generate and store OTP
   const code = Math.floor(100000 + Math.random() * 900000).toString();
-  const expiresAt = Date.now() + OTP_TTL_MS;
+  otpStore.set(normalizedEmail, { code, expiresAt: Date.now() + OTP_TTL_MS });
 
-  // Store it
-  otpStore.set(normalizedEmail, { code, expiresAt });
-
-  // Clean up expired entries periodically (simple GC)
+  // Periodic cleanup of expired entries
   for (const [key, val] of otpStore.entries()) {
     if (val.expiresAt < Date.now()) otpStore.delete(key);
   }
 
   try {
-    const response = await fetch('https://api.brevo.com/v3/smtp/email', {
+    const brevoRes = await fetch('https://api.brevo.com/v3/smtp/email', {
       method: 'POST',
       headers: {
         'accept': 'application/json',
@@ -61,29 +51,35 @@ export default async function handler(req, res) {
         subject: 'Your TruckEase verification code',
         htmlContent: `
           <div style="font-family:sans-serif;max-width:480px;margin:0 auto;padding:32px 24px;">
+            <img src="https://truckeasesolutions.com/truckease-logo.png"
+                 alt="TruckEase Solutions" style="height:36px;margin-bottom:24px;" />
             <h2 style="color:#0c1a36;margin-bottom:8px;">Your verification code</h2>
-            <p style="color:#444;margin-bottom:24px;">Use the code below to confirm your email address. It expires in 10 minutes.</p>
-            <div style="background:#f3f4f7;border-radius:8px;padding:24px;text-align:center;letter-spacing:0.2em;font-size:32px;font-weight:700;color:#0c1a36;">
+            <p style="color:#444;margin-bottom:24px;">
+              Use the code below to confirm your email address. It expires in 10 minutes.
+            </p>
+            <div style="background:#f3f4f7;border-radius:8px;padding:24px;text-align:center;
+                        letter-spacing:0.25em;font-size:34px;font-weight:700;color:#0c1a36;">
               ${code}
             </div>
-            <p style="color:#888;font-size:13px;margin-top:24px;">If you didn't request this, you can safely ignore this email.</p>
+            <p style="color:#888;font-size:13px;margin-top:24px;">
+              If you didn't request this, you can safely ignore this email.
+            </p>
           </div>
         `
       })
     });
 
-    if (!response.ok) {
-      const err = await response.json().catch(() => ({}));
-      console.error('Brevo error:', err);
-      // Remove stored OTP so user can retry
+    if (!brevoRes.ok) {
+      const err = await brevoRes.json().catch(() => ({}));
+      console.error('Brevo send error:', JSON.stringify(err));
       otpStore.delete(normalizedEmail);
-      return res.status(502).json({ error: 'Failed to send email. Please try again.' });
+      return res.status(502).json({ error: 'Failed to send code. Please try again.' });
     }
 
     return res.status(200).json({ success: true, message: 'Verification code sent.' });
 
-  } catch (error) {
-    console.error('send-otp error:', error);
+  } catch (err) {
+    console.error('send-otp exception:', err);
     otpStore.delete(normalizedEmail);
     return res.status(500).json({ error: 'Internal server error. Please try again.' });
   }
