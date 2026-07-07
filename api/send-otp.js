@@ -1,18 +1,7 @@
-// WHY THIS APPROACH:
-// Vercel serverless functions are stateless — each function file gets its own
-// isolated module scope. A Map() in send-otp.js is NEVER visible to verify-otp.js.
-// This was the root cause of OTP verification always failing.
-//
-// Fix: generate the OTP, then HMAC-sign it into a token we send back to the
-// browser. The browser submits that token with the code. verify-otp re-derives
-// the expected HMAC and compares — no shared state needed at all.
-//
-// Required env var: OTP_SECRET — any long random string, set in Vercel dashboard.
-
 import { createHmac } from 'crypto';
 
 const SECRET = process.env.OTP_SECRET || 'truckease-otp-fallback-secret';
-const OTP_TTL_SECONDS = 600; // 10 minutes
+const OTP_TTL_SECONDS = 600;
 
 function signToken(email, code, issuedAt) {
   const payload = `${email}|${code}|${issuedAt}`;
@@ -44,10 +33,7 @@ export default async function handler(req, res) {
         'content-type': 'application/json'
       },
       body: JSON.stringify({
-        sender: {
-          name: 'TruckEase Solutions',
-          email: 'leads@truckeasesolutions.com'
-        },
+        sender: { name: 'TruckEase Solutions', email: 'leads@truckeasesolutions.com' },
         to: [{ email: normalizedEmail }],
         subject: 'Your TruckEase verification code',
         htmlContent: `
@@ -55,15 +41,13 @@ export default async function handler(req, res) {
             <img src="https://truckeasesolutions.com/truckease-logo.png"
                  alt="TruckEase Solutions" style="height:36px;margin-bottom:24px;" />
             <h2 style="color:#0c1a36;margin-bottom:8px;">Your verification code</h2>
-            <p style="color:#444;margin-bottom:24px;">
-              Use the code below to confirm your email address. It expires in 10 minutes.
-            </p>
+            <p style="color:#444;margin-bottom:24px;">Use the code below to confirm your email. It expires in 10 minutes.</p>
             <div style="background:#f3f4f7;border-radius:8px;padding:24px;text-align:center;
                         letter-spacing:0.25em;font-size:34px;font-weight:700;color:#0c1a36;">
               ${code}
             </div>
             <p style="color:#888;font-size:13px;margin-top:24px;">
-              If you didn't request this, you can safely ignore this email.
+              If you did not request this, you can safely ignore this email.
             </p>
           </div>
         `
@@ -76,11 +60,7 @@ export default async function handler(req, res) {
       return res.status(502).json({ error: 'Failed to send code. Please try again.' });
     }
 
-    return res.status(200).json({
-      success: true,
-      message: 'Verification code sent.',
-      token
-    });
+    return res.status(200).json({ success: true, message: 'Verification code sent.', token });
 
   } catch (err) {
     console.error('send-otp error:', err);
