@@ -1,8 +1,24 @@
-// In-memory OTP store: email -> { code, expiresAt }
-// Works correctly for Vercel single-region serverless.
-// For multi-region or high traffic: replace with Vercel KV or Upstash Redis.
-const otpStore = new Map();
-const OTP_TTL_MS = 10 * 60 * 1000; // 10 minutes
+// WHY THIS APPROACH:
+// Vercel serverless functions are stateless — each function file gets its own
+// isolated module scope. A Map() in send-otp.js is NEVER visible to verify-otp.js.
+// This was the root cause of OTP verification always failing.
+//
+// Fix: generate the OTP, then HMAC-sign it into a token we send back to the
+// browser. The browser submits that token with the code. verify-otp re-derives
+// the expected HMAC and compares — no shared state needed at all.
+//
+// Required env var: OTP_SECRET — any long random string, set in Vercel dashboard.
+
+import { createHmac } from 'crypto';
+
+const SECRET = process.env.OTP_SECRET || 'truckease-otp-fallback-secret';
+const OTP_TTL_SECONDS = 600; // 10 minutes
+
+function signToken(email, code, issuedAt) {
+  const payload = `${email}|${code}|${issuedAt}`;
+  const sig = createHmac('sha256', SECRET).update(payload).digest('hex');
+  return Buffer.from(`${payload}|${sig}`).toString('base64url');
+}
 
 export default async function handler(req, res) {
   if (req.method === 'OPTIONS') return res.status(200).end();
@@ -15,24 +31,9 @@ export default async function handler(req, res) {
   }
 
   const normalizedEmail = email.toLowerCase().trim();
-
-  // Rate-limit: block if an unexpired OTP already exists
-  const existing = otpStore.get(normalizedEmail);
-  if (existing && existing.expiresAt > Date.now()) {
-    const secondsLeft = Math.ceil((existing.expiresAt - Date.now()) / 1000);
-    return res.status(429).json({
-      error: `A code was already sent. Please wait ${secondsLeft} seconds before requesting a new one.`
-    });
-  }
-
-  // Generate and store OTP
   const code = Math.floor(100000 + Math.random() * 900000).toString();
-  otpStore.set(normalizedEmail, { code, expiresAt: Date.now() + OTP_TTL_MS });
-
-  // Periodic cleanup of expired entries
-  for (const [key, val] of otpStore.entries()) {
-    if (val.expiresAt < Date.now()) otpStore.delete(key);
-  }
+  const issuedAt = Math.floor(Date.now() / 1000);
+  const token = signToken(normalizedEmail, code, issuedAt);
 
   try {
     const brevoRes = await fetch('https://api.brevo.com/v3/smtp/email', {
@@ -71,16 +72,18 @@ export default async function handler(req, res) {
 
     if (!brevoRes.ok) {
       const err = await brevoRes.json().catch(() => ({}));
-      console.error('Brevo send error:', JSON.stringify(err));
-      otpStore.delete(normalizedEmail);
+      console.error('Brevo error:', JSON.stringify(err));
       return res.status(502).json({ error: 'Failed to send code. Please try again.' });
     }
 
-    return res.status(200).json({ success: true, message: 'Verification code sent.' });
+    return res.status(200).json({
+      success: true,
+      message: 'Verification code sent.',
+      token
+    });
 
   } catch (err) {
-    console.error('send-otp exception:', err);
-    otpStore.delete(normalizedEmail);
+    console.error('send-otp error:', err);
     return res.status(500).json({ error: 'Internal server error. Please try again.' });
   }
 }
