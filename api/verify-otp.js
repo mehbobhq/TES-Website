@@ -1,11 +1,7 @@
-// Verifies the signed token returned by send-otp.js.
-// No shared memory or database needed — the token itself carries the signed OTP.
-// Required env var: OTP_SECRET — must match the value set for send-otp.js.
-
 import { createHmac, timingSafeEqual } from 'crypto';
 
 const SECRET = process.env.OTP_SECRET || 'truckease-otp-fallback-secret';
-const OTP_TTL_SECONDS = 600; // 10 minutes — must match send-otp.js
+const OTP_TTL_SECONDS = 600;
 
 export default async function handler(req, res) {
   if (req.method === 'OPTIONS') return res.status(200).end();
@@ -14,12 +10,9 @@ export default async function handler(req, res) {
   const { email, otp, token } = req.body || {};
 
   if (!email || !otp || !token) {
-    return res.status(400).json({
-      error: 'Email, verification code, and session token are required.'
-    });
+    return res.status(400).json({ error: 'Email, verification code, and session token are required.' });
   }
 
-  // Decode token
   let tokenEmail, tokenCode, tokenIssuedAt, tokenSig;
   try {
     const decoded = Buffer.from(token, 'base64url').toString('utf8');
@@ -30,20 +23,17 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'Invalid session. Please request a new code.' });
   }
 
-  // Check email matches
   if (tokenEmail !== email.toLowerCase().trim()) {
     return res.status(400).json({ error: 'Session mismatch. Please request a new code.' });
   }
 
-  // Check expiry
-  const now = Math.floor(Date.now() / 1000);
-  if (now - parseInt(tokenIssuedAt, 10) > OTP_TTL_SECONDS) {
+  if (Math.floor(Date.now() / 1000) - parseInt(tokenIssuedAt, 10) > OTP_TTL_SECONDS) {
     return res.status(400).json({ error: 'Your verification code has expired. Please request a new one.' });
   }
 
-  // Verify HMAC signature
   const payload = `${tokenEmail}|${tokenCode}|${tokenIssuedAt}`;
   const expectedSig = createHmac('sha256', SECRET).update(payload).digest('hex');
+
   try {
     const sigValid = timingSafeEqual(
       Buffer.from(tokenSig, 'hex'),
@@ -54,7 +44,6 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'Invalid session. Please request a new code.' });
   }
 
-  // Check code matches
   if (String(otp).trim() !== tokenCode) {
     return res.status(400).json({ error: 'Incorrect verification code. Please check and try again.' });
   }
