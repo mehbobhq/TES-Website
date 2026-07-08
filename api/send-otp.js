@@ -16,7 +16,7 @@ export default async function handler(req, res) {
   const { email } = req.body || {};
 
   if (!email || typeof email !== 'string' || !email.includes('@')) {
-    return res.status(400).json({ error: 'A valid email address is required.' });
+    return res.status(400).json({ ok: false, error: 'A valid email address is required.' });
   }
 
   const normalizedEmail = email.toLowerCase().trim();
@@ -57,13 +57,14 @@ export default async function handler(req, res) {
     if (!brevoRes.ok) {
       const err = await brevoRes.json().catch(() => ({}));
       console.error('Brevo error:', JSON.stringify(err));
-      return res.status(502).json({ error: 'Failed to send code. Please try again.' });
+      return res.status(502).json({ ok: false, error: 'Failed to send code. Please try again.' });
     }
 
-    return res.status(200).json({ success: true, message: 'Verification code sent.', token });
+    // ok: true is required by the frontend check (!M.ok triggers error state)
+    return res.status(200).json({ ok: true, success: true, message: 'Verification code sent.', token });
 
   } catch (err) {
     console.error('send-otp error:', err);
-    return res.status(500).json({ error: 'Internal server error. Please try again.' });
+    return res.status(500).json({ ok: false, error: 'Internal server error. Please try again.' });
   }
 }
