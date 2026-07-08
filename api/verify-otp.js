@@ -10,7 +10,7 @@ export default async function handler(req, res) {
   const { email, otp, token } = req.body || {};
 
   if (!email || !otp || !token) {
-    return res.status(400).json({ error: 'Email, verification code, and session token are required.' });
+    return res.status(400).json({ ok: false, error: 'Email, verification code, and session token are required.' });
   }
 
   let tokenEmail, tokenCode, tokenIssuedAt, tokenSig;
@@ -20,15 +20,15 @@ export default async function handler(req, res) {
     if (parts.length !== 4) throw new Error('malformed');
     [tokenEmail, tokenCode, tokenIssuedAt, tokenSig] = parts;
   } catch {
-    return res.status(400).json({ error: 'Invalid session. Please request a new code.' });
+    return res.status(400).json({ ok: false, error: 'Invalid session. Please request a new code.' });
   }
 
   if (tokenEmail !== email.toLowerCase().trim()) {
-    return res.status(400).json({ error: 'Session mismatch. Please request a new code.' });
+    return res.status(400).json({ ok: false, error: 'Session mismatch. Please request a new code.' });
   }
 
   if (Math.floor(Date.now() / 1000) - parseInt(tokenIssuedAt, 10) > OTP_TTL_SECONDS) {
-    return res.status(400).json({ error: 'Your verification code has expired. Please request a new one.' });
+    return res.status(400).json({ ok: false, error: 'Your verification code has expired. Please request a new one.' });
   }
 
   const payload = `${tokenEmail}|${tokenCode}|${tokenIssuedAt}`;
@@ -41,12 +41,13 @@ export default async function handler(req, res) {
     );
     if (!sigValid) throw new Error('bad sig');
   } catch {
-    return res.status(400).json({ error: 'Invalid session. Please request a new code.' });
+    return res.status(400).json({ ok: false, error: 'Invalid session. Please request a new code.' });
   }
 
   if (String(otp).trim() !== tokenCode) {
-    return res.status(400).json({ error: 'Incorrect verification code. Please check and try again.' });
+    return res.status(400).json({ ok: false, error: 'Incorrect verification code. Please check and try again.' });
   }
 
-  return res.status(200).json({ success: true, message: 'Email verified successfully.' });
+  // ok: true is required by the frontend check (!M.ok triggers error state)
+  return res.status(200).json({ ok: true, success: true, message: 'Email verified successfully.' });
 }
