@@ -10,7 +10,7 @@
       "destination": "/blog.html"
     },
     {
-      "source": "/((?!assets/|.*\\..*$).*)",
+      "source": "/(.*)",
       "destination": "/index.html"
     }
   ],
