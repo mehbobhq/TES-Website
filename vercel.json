@@ -3,7 +3,11 @@
   "trailingSlash": false,
   "rewrites": [
     {
-      "source": "/:path*",
+      "source": "/blog",
+      "destination": "/blog.html"
+    },
+    {
+      "source": "/(.*)",
       "destination": "/index.html"
     }
   ]
