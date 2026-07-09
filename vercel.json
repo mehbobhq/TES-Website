@@ -1,5 +1,6 @@
 {
   "cleanUrls": true,
+  "trailingSlash": false,
   "rewrites": [
     {
       "source": "/api/:path*",
@@ -10,15 +11,19 @@
       "destination": "/blog.html"
     },
     {
-      "source": "/images/(.*)",
-      "destination": "/images/$1"
+      "source": "/contact",
+      "destination": "/index.html"
     },
     {
-      "source": "/assets/(.*)",
-      "destination": "/assets/$1"
+      "source": "/platform",
+      "destination": "/index.html"
     },
     {
-      "source": "/((?!blog\\.html$).*)",
+      "source": "/services",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/about",
       "destination": "/index.html"
     }
   ],
