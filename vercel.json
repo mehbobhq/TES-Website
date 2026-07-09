@@ -10,15 +10,11 @@
       "destination": "/blog.html"
     },
     {
-      "source": "/images/(.*)",
-      "destination": "/images/$1"
+      "source": "/assets/:path*",
+      "destination": "/assets/:path*"
     },
     {
-      "source": "/assets/(.*)",
-      "destination": "/assets/$1"
-    },
-    {
-      "source": "/((?!js|css|png|jpg|jpeg|svg|webp|ico|json).*)",
+      "source": "/((?!blog|assets|api).*)" ,
       "destination": "/index.html"
     }
   ],
