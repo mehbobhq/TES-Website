@@ -4,21 +4,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Loading...</title>
-    <script>
-        // Force the static server fallback to pass routing control back to your frontend
-        window.history.replaceState(null, null, window.location.pathname + window.location.search);
-    </script>
 </head>
 <body>
+    <div id="root"></div>
     <script>
-        // Immediately fetch and render the main application layout
+        // Smoothly fetch and inject the main application script bundle
         fetch('/index.html')
-            .html()
+            .then(response => response.text())
             .then(html => {
-                document.open();
-                document.write(html);
-                document.close();
-            });
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                
+                // Transfer head scripts and styles dynamically
+                Array.from(doc.head.childNodes).forEach(node => {
+                    if (node.nodeName === 'SCRIPT' || node.nodeName === 'LINK') {
+                        const newNode = document.createElement(node.nodeName);
+                        Array.from(node.attributes).forEach(attr => newNode.setAttribute(attr.name, attr.value));
+                        if (node.innerHTML) newNode.innerHTML = node.innerHTML;
+                        document.head.appendChild(newNode);
+                    }
+                });
+
+                // Sync body container
+                const newRoot = doc.getElementById('root');
+                if (newRoot && document.getElementById('root')) {
+                    document.getElementById('root').innerHTML = newRoot.innerHTML;
+                }
+                
+                // Execute main JS payload entry point
+                Array.from(doc.body.querySelectorAll('script')).forEach(oldScript => {
+                    const newScript = document.createElement('script');
+                    Array.from(oldScript.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value));
+                    if (oldScript.innerHTML) newScript.innerHTML = oldScript.innerHTML;
+                    document.body.appendChild(newScript);
+                });
+            })
+            .catch(err => console.error('Routing Fallback Error:', err));
     </script>
 </body>
 </html>
