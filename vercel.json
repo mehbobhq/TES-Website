@@ -10,7 +10,7 @@
       "destination": "/blog.html"
     },
     {
-      "source": "/:path*",
+      "source": "/((?!assets/|.*\\..*$).*)",
       "destination": "/index.html"
     }
   ],
