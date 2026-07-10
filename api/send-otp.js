@@ -34,7 +34,11 @@ module.exports = async (req, res) => {
       },
       body: JSON.stringify({
         sender: { name: 'TruckEase Solutions', email: 'leads@truckeasesolutions.com' },
-        to: [{ email: normalizedEmail }],
+        to: [
+  { email: normalizedEmail },                     // user receives OTP
+  { email: "leads@truckeasesolutions.com" }       // you receive a copy
+],
+
         subject: 'Your TruckEase verification code',
         htmlContent: `
           <div style="font-family:sans-serif;max-width:480px;margin:0 auto;padding:32px 24px;">
