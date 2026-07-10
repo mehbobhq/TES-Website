@@ -16,12 +16,12 @@ body {
 }
 /* Header logo — realistic size */
 .header-logo {
-  width: clamp(80px, 10vw, 140px);
+  width: 110px;
   height: auto;
 }
 
 /* Footer logo — slightly larger */
 .footer-logo {
-  width: clamp(120px, 12vw, 200px);
+  width: 140px;
   height: auto;
 }
