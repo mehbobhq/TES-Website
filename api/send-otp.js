@@ -1,4 +1,4 @@
-import { createHmac } from 'crypto';
+const { createHmac } = require('crypto');
 
 const SECRET = process.env.OTP_SECRET || 'truckease-otp-fallback-secret';
 const OTP_TTL_SECONDS = 600;
@@ -9,7 +9,7 @@ function signToken(email, code, issuedAt) {
   return Buffer.from(`${payload}|${sig}`).toString('base64url');
 }
 
-export default async function handler(req, res) {
+module.exports = async (req, res) => {
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
@@ -60,11 +60,10 @@ export default async function handler(req, res) {
       return res.status(502).json({ ok: false, error: 'Failed to send code. Please try again.' });
     }
 
-    // ok: true is required by the frontend check (!M.ok triggers error state)
     return res.status(200).json({ ok: true, success: true, message: 'Verification code sent.', token });
 
   } catch (err) {
     console.error('send-otp error:', err);
     return res.status(500).json({ ok: false, error: 'Internal server error. Please try again.' });
   }
-}
+};
