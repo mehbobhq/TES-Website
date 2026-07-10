@@ -1,9 +1,9 @@
-import { createHmac, timingSafeEqual } from 'crypto';
+const { createHmac, timingSafeEqual } = require('crypto');
 
 const SECRET = process.env.OTP_SECRET || 'truckease-otp-fallback-secret';
 const OTP_TTL_SECONDS = 600;
 
-export default async function handler(req, res) {
+module.exports = async (req, res) => {
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
@@ -48,6 +48,5 @@ export default async function handler(req, res) {
     return res.status(400).json({ ok: false, error: 'Incorrect verification code. Please check and try again.' });
   }
 
-  // ok: true is required by the frontend check (!M.ok triggers error state)
   return res.status(200).json({ ok: true, success: true, message: 'Email verified successfully.' });
-}
+};
