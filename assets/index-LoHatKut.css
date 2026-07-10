@@ -9,14 +9,19 @@ body {
   overflow-wrap: break-word;
 }
 
-/* Make images responsive */
-img {
-  max-width: 100%;
-  height: auto;
-}
-
 /* Fix container spacing on mobile */
 .container {
   padding-left: 16px;
   padding-right: 16px;
+}
+/* Header logo — realistic size */
+.header-logo {
+  width: clamp(80px, 10vw, 140px);
+  height: auto;
+}
+
+/* Footer logo — slightly larger */
+.footer-logo {
+  width: clamp(120px, 12vw, 200px);
+  height: auto;
 }
