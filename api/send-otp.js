@@ -33,19 +33,20 @@ module.exports = async (req, res) => {
         'content-type': 'application/json'
       },
       body: JSON.stringify({
-        sender: { name: 'TruckEase Solutions', email: 'leads@truckeasesolutions.com' },
-        to: [
-  { email: normalizedEmail },                     // user receives OTP
-  { email: "leads@truckeasesolutions.com" }       // you receive a copy
-],
-
+        sender: {
+          name: 'TruckEase Solutions',
+          email: 'leads@truckeasesolutions.com'
+        },
+        to: [{ email: normalizedEmail }],
         subject: 'Your TruckEase verification code',
         htmlContent: `
           <div style="font-family:sans-serif;max-width:480px;margin:0 auto;padding:32px 24px;">
             <img src="https://truckeasesolutions.com/truckease-logo.png"
                  alt="TruckEase Solutions" style="height:36px;margin-bottom:24px;" />
             <h2 style="color:#0c1a36;margin-bottom:8px;">Your verification code</h2>
-            <p style="color:#444;margin-bottom:24px;">Use the code below to confirm your email. It expires in 10 minutes.</p>
+            <p style="color:#444;margin-bottom:24px;">
+              Use the code below to confirm your email. It expires in 10 minutes.
+            </p>
             <div style="background:#f3f4f7;border-radius:8px;padding:24px;text-align:center;
                         letter-spacing:0.25em;font-size:34px;font-weight:700;color:#0c1a36;">
               ${code}
@@ -60,7 +61,7 @@ module.exports = async (req, res) => {
 
     if (!brevoRes.ok) {
       const err = await brevoRes.json().catch(() => ({}));
-      console.error('Brevo error:', JSON.stringify(err));
+      console.error('Brevo OTP error:', JSON.stringify(err));
       return res.status(502).json({ ok: false, error: 'Failed to send code. Please try again.' });
     }
 
