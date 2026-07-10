@@ -25,3 +25,7 @@ body {
   width: 140px;
   height: auto;
 }
+/* Remove right-side white gap */
+html, body {
+  overflow-x: hidden;
+}
