@@ -1,9 +1,12 @@
 {
-  "cleanUrls": true,
   "rewrites": [
     {
       "source": "/api/:path*",
       "destination": "/api/:path*"
+    },
+    {
+      "source": "/assets/:path*",
+      "destination": "/assets/:path*"
     },
     {
       "source": "/blog",
@@ -14,19 +17,7 @@
       "destination": "/blog.html"
     },
     {
-      "source": "/assets/:path*",
-      "destination": "/assets/:path*"
-    },
-    {
-      "source": "/contact",
-      "destination": "/index.html"
-    },
-    {
-      "source": "/contact.html",
-      "destination": "/index.html"
-    },
-    {
-      "source": "/((?!assets|blog).*)",
+      "source": "/(.*)",
       "destination": "/index.html"
     }
   ],
