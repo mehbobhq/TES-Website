@@ -1,9 +1,16 @@
 module.exports = async (req, res) => {
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
-  }
+    // 1. Add this preflight CORS handler
+    if (req.method === 'OPTIONS') {
+        return res.status(200).end();
+    }
 
-  const { email, name, phone, dot, details } = req.body || {};
+    // 2. Keep your existing POST check
+    if (req.method !== 'POST') {
+        return res.status(405).json({ error: 'Method not allowed' });
+    }
+
+    const { email, name, phone, dot, details } = req.body || {};
+    // ... rest of your existing code
 
   await fetch('https://api.brevo.com/v3/smtp/email', {
     method: 'POST',
