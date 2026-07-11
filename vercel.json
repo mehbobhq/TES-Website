@@ -14,19 +14,19 @@
       "destination": "/blog.html"
     },
     {
-      "source": "/contact",
-      "destination": "/contact.html"
-    },
-    {
-      "source": "/contact.html",
-      "destination": "/contact.html"
-    },
-    {
       "source": "/assets/:path*",
       "destination": "/assets/:path*"
     },
     {
-      "source": "/((?!assets|blog|contact|favicon.svg|robots.txt|sitemap.xml).*)",
+      "source": "/contact",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/contact.html",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/((?!assets|blog).*)",
       "destination": "/index.html"
     }
   ],
