@@ -25,11 +25,11 @@ module.exports = async (req, res) => {
         'content-type': 'application/json'
       },
       body: JSON.stringify({
-        sender: {
-          name: 'TruckEase Website',
-          email: 'leads@truckeasesolutions.com'
-        },
-        to: [{ email: 'leads@truckeasesolutions.com', name: 'TruckEase' }],
+     sender: {
+      name: 'TruckEase Website',
+      email: 'noreply@truckeasesolutions.com'
+    },
+    to: [{ email: 'leads@truckeasesolutions.com', name: 'TruckEase Admin' }],
         replyTo: { email, name: fullName },
         subject: `New Risk Screening Request — ${fullName}`,
         htmlContent: `
