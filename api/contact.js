@@ -29,7 +29,7 @@ module.exports = async (req, res) => {
             body: JSON.stringify({
                 // Using a 'noreply' sender address prevents soft-bounces
                 sender: { name: 'TruckEase Solutions', email: 'noreply@truckeasesolutions.com' },
-                to: [{ email: 'leads@truckeasesolutions.com' }],
+                to: [{ email: 'truckeasesolutions@gmail.com' }],
                 replyTo: { email: email, name: name },
                 subject: 'New Contact Form Submission',
                 htmlContent: `
