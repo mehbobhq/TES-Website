@@ -15,7 +15,7 @@ module.exports = async (req, res) => {
     body: JSON.stringify({
       sender: { name: 'TruckEase Solutions', email: 'noreply@truckeasesolutions.com' },
     to: [{ email: 'leads@truckeasesolutions.com' }],
-      subject: 'New Risk Screening Lead',
+      subject: 'New Contact Form Lead',
       htmlContent: `
         <h2>New Risk Screening Lead</h2>
         <p><strong>Email:</strong> ${email}</p>
