@@ -10,7 +10,11 @@
       "destination": "/blog.html"
     },
     {
-      "source": "/:path*",
+      "source": "/assets/:path*",
+      "destination": "/assets/:path*"
+    },
+    {
+      "source": "/((?!assets|blog|blog.html|favicon.svg|robots.txt|sitemap.xml).*)",
       "destination": "/index.html"
     }
   ],
