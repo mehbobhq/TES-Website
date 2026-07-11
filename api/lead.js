@@ -13,8 +13,8 @@ module.exports = async (req, res) => {
       'content-type': 'application/json'
     },
     body: JSON.stringify({
-      sender: { name: 'TruckEase Solutions', email: 'leads@truckeasesolutions.com' },
-      to: [{ email: 'leads@truckeasesolutions.com' }],
+      sender: { name: 'TruckEase Solutions', email: 'noreply@truckeasesolutions.com' },
+    to: [{ email: 'leads@truckeasesolutions.com' }],
       subject: 'New Risk Screening Lead',
       htmlContent: `
         <h2>New Risk Screening Lead</h2>
