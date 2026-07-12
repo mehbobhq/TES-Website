@@ -29,7 +29,7 @@ module.exports = async (req, res) => {
       name: 'TruckEase Website',
       email: 'noreply@truckeasesolutions.com'
     },
-    to: [{ email: 'leads@truckeasesolutions.com', name: 'TruckEase Admin' }],
+    to: [{ email: 'truckeasesolutions@gmail.com', name: 'TruckEase Admin' }],
         replyTo: { email, name: fullName },
         subject: `New Risk Screening Request — ${fullName}`,
         htmlContent: `
