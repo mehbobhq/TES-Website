@@ -1,4 +1,46 @@
 {
+  "redirects": [
+    {
+      "source": "/industry-leading-affiliates/:path*",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/login/:path*",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/password-reset/:path*",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/privacy-policy/index.html",
+      "destination": "/privacy-policy",
+      "permanent": true
+    },
+    {
+      "source": "/terms-conditions/:path*",
+      "destination": "/terms-of-service",
+      "permanent": true
+    },
+    {
+      "source": "/offerings/:path*",
+      "destination": "/services",
+      "permanent": true
+    },
+    {
+      "source": "/about/",
+      "destination": "/about",
+      "permanent": true
+    },
+    {
+      "source": "/contact/",
+      "destination": "/contact",
+      "permanent": true
+    }
+  ],
   "rewrites": [
     {
       "source": "/api/:path*",
