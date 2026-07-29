@@ -6,4 +6,9 @@
   <url><loc>https://truckeasesolutions.com/about</loc><priority>0.7</priority></url>
   <url><loc>https://truckeasesolutions.com/contact</loc><priority>0.6</priority></url>
   <url><loc>https://truckeasesolutions.com/free-review</loc><priority>0.9</priority></url>
+  <url><loc>https://truckeasesolutions.com/blog</loc><priority>0.7</priority></url>
+  <url><loc>https://truckeasesolutions.com/privacy-policy</loc><priority>0.2</priority></url>
+  <url><loc>https://truckeasesolutions.com/terms-of-service</loc><priority>0.2</priority></url>
+  <url><loc>https://truckeasesolutions.com/cookie-policy</loc><priority>0.2</priority></url>
+  <url><loc>https://truckeasesolutions.com/legal-disclaimer</loc><priority>0.2</priority></url>
 </urlset>
