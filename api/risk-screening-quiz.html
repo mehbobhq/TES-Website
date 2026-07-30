@@ -23,7 +23,10 @@
   .tes-rs .submit-btn { margin-top: 6px; padding: 14px; border-radius: 8px; border: none; background: #e8720c; color: #fff; font-size: 15px; font-weight: 600; cursor: pointer; }
   .tes-rs .status { font-size: 14px; margin-top: 12px; }
 </style>
-
+ 
+<div style="max-width:640px;margin:0 auto;padding:20px 0;">
+  <a href="/"><img src="/truckease-logo.png" alt="TruckEase Solutions" style="height:28px;" /></a>
+</div>
 <div class="tes-rs">
   <div id="screen1">
     <h1>How well do you actually know your numbers?</h1>
@@ -31,7 +34,7 @@
     <div id="quiz"></div>
     <button class="next-btn" id="nextBtn" disabled>Continue</button>
   </div>
-
+ 
   <div id="screen2">
     <p class="handoff" id="handoffLine"></p>
     <p class="looks-for-label">What your risk screening looks for</p>
@@ -39,7 +42,7 @@
     <div class="lf-row"><div class="lf-num">2</div><div class="lf-text">Authority and registration issues that may interrupt operations</div></div>
     <div class="lf-row"><div class="lf-num">3</div><div class="lf-text">Filing gaps and regulatory inconsistencies that deserve attention</div></div>
     <div class="lf-row"><div class="lf-num">4</div><div class="lf-text">Canadian compliance indicators where applicable</div></div>
-
+ 
     <form class="form-fields" id="rsForm">
       <input type="text" name="fullName" placeholder="Full name" required />
       <input type="email" name="email" placeholder="Email" required />
@@ -56,7 +59,7 @@
     </form>
   </div>
 </div>
-
+ 
 <script>
 (function () {
   const questions = [
@@ -66,11 +69,11 @@
     "How many loads or contracts have you quietly lost, without anyone telling you why?",
     "Same issue, two different trucks, months apart \u2014 would you catch the connection?"
   ];
-
+ 
   const answers = new Array(questions.length).fill(null);
   const quizEl = document.getElementById('quiz');
   const nextBtn = document.getElementById('nextBtn');
-
+ 
   questions.forEach((q, i) => {
     const row = document.createElement('div');
     row.className = 'q-row';
@@ -96,7 +99,7 @@
     row.appendChild(opts);
     quizEl.appendChild(row);
   });
-
+ 
   nextBtn.onclick = () => {
     const unsureCount = answers.filter(a => a === 'Not sure').length;
     document.getElementById('handoffLine').textContent = unsureCount > 0
@@ -106,7 +109,7 @@
     document.getElementById('screen2').style.display = 'block';
     window.__tesQuizAnswers = questions.map((q, i) => ({ question: q, answer: answers[i] }));
   };
-
+ 
   document.getElementById('rsForm').addEventListener('submit', async function (e) {
     e.preventDefault();
     const statusEl = document.getElementById('status');
@@ -143,3 +146,4 @@
   });
 })();
 </script>
+ 
