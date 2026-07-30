@@ -48,5 +48,13 @@ module.exports = async (req, res) => {
     return res.status(400).json({ ok: false, error: 'Incorrect verification code. Please check and try again.' });
   }
 
-  return res.status(200).json({ ok: true, success: true, message: 'Email verified successfully.' });
+  // Issue a short-lived signed proof that this email was verified,
+  // so downstream endpoints (e.g. free-review) can require it and
+  // can't be called directly, skipping the OTP step.
+  const verifiedAt = Math.floor(Date.now() / 1000);
+  const verifiedPayload = `${tokenEmail}|verified|${verifiedAt}`;
+  const verifiedSig = createHmac('sha256', SECRET).update(verifiedPayload).digest('hex');
+  const verifiedToken = Buffer.from(`${verifiedPayload}|${verifiedSig}`).toString('base64url');
+
+  return res.status(200).json({ ok: true, success: true, message: 'Email verified successfully.', verifiedToken });
 };
