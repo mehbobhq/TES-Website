@@ -211,6 +211,22 @@
           updatePageMeta();
         }
       }, 100);
+
+      // ─────────────────────────────────────────────────────────────
+      // /free-review is now a standalone static page (free-review.html),
+      // not an in-app route. The SPA's own router still intercepts
+      // clicks on internal links before they reach the server, so this
+      // forces a real page load for that one path specifically —
+      // added in the capture phase so it runs before the app's own
+      // click handler does.
+      // ─────────────────────────────────────────────────────────────
+      document.addEventListener("click", function (e) {
+        const link = e.target.closest('a[href="/free-review"]');
+        if (!link) return;
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        window.location.href = "/free-review";
+      }, true);
     </script>
   </body>
 </html>
