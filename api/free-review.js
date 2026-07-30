@@ -1,21 +1,29 @@
 const { createHmac } = require('crypto');
-
+ 
 module.exports = async (req, res) => {
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
-
-  const { email, fullName, phone, dotNumber, operations } = req.body || {};
-
+ 
+  const { email, fullName, phone, dotNumber, operations, quizAnswers } = req.body || {};
+ 
+  const quizRows = Array.isArray(quizAnswers) && quizAnswers.length
+    ? quizAnswers.map(q => `
+              <tr style="border-bottom:1px solid #e2e8f0;">
+                <td style="padding:8px 0;color:#64748b;font-size:12px;width:60%;">${q.question}</td>
+                <td style="padding:8px 0;color:${q.answer === 'Not sure' ? '#e8720c' : '#0c1a36'};font-size:12px;font-weight:600;">${q.answer}</td>
+              </tr>`).join('')
+    : '';
+ 
   if (!email || !fullName) {
     return res.status(400).json({ ok: false, error: 'Required fields are missing.' });
   }
-
+ 
   const submittedAt = new Date().toLocaleString('en-US', {
     timeZone: 'America/Toronto',
     dateStyle: 'full',
     timeStyle: 'short'
   });
-
+ 
   try {
     const brevoRes = await fetch('https://api.brevo.com/v3/smtp/email', {
       method: 'POST',
@@ -40,7 +48,7 @@ module.exports = async (req, res) => {
             </div>
             <h2 style="color:#0c1a36;margin:0 0 4px;">New Risk Screening Request</h2>
             <p style="color:#64748b;margin:0 0 24px;font-size:14px;">${submittedAt}</p>
-
+ 
             <table style="width:100%;border-collapse:collapse;">
               <tr style="border-bottom:1px solid #e2e8f0;">
                 <td style="padding:12px 0;color:#64748b;font-size:13px;width:40%;font-weight:600;">Full Name</td>
@@ -65,7 +73,11 @@ module.exports = async (req, res) => {
                 <td style="padding:12px 0;color:#0c1a36;font-size:14px;">${operations || 'Not provided'}</td>
               </tr>
             </table>
-
+ 
+            ${quizRows ? `
+            <h3 style="color:#0c1a36;font-size:14px;margin:24px 0 4px;">Self-assessment answers</h3>
+            <table style="width:100%;border-collapse:collapse;">${quizRows}</table>` : ''}
+ 
             <div style="margin-top:24px;background:#fff8f0;border-left:4px solid #e8720c;padding:14px 18px;border-radius:0 8px 8px 0;">
               <p style="margin:0;font-size:13px;color:#7c3600;">
                 Reply directly to this email to respond to ${fullName}.
@@ -75,16 +87,16 @@ module.exports = async (req, res) => {
         `
       })
     });
-
+ 
     if (!brevoRes.ok) {
       const err = await brevoRes.json().catch(() => ({}));
       console.error('Brevo free-review error:', JSON.stringify(err));
       // Still return success to user — their request was received even if notification failed
       return res.status(200).json({ ok: true, success: true });
     }
-
+ 
     return res.status(200).json({ ok: true, success: true });
-
+ 
   } catch (err) {
     console.error('free-review error:', err);
     return res.status(200).json({ ok: true, success: true });
