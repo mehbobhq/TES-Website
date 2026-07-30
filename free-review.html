@@ -1,0 +1,148 @@
+<!-- TruckEase Risk Screening: quiz-to-form flow. Drop into the free-review page,
+     replacing the current top-of-form content. Colors match the existing
+     brand (navy #0c1a36 / orange #e8720c) used in api/free-review.js emails. -->
+<style>
+  .tes-rs { max-width: 640px; margin: 0 auto; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+  .tes-rs h1 { font-size: 26px; font-weight: 700; color: #0c1a36; margin: 0 0 6px; }
+  .tes-rs .sub { font-size: 15px; color: #64748b; margin: 0 0 28px; }
+  .tes-rs .q-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 0; border-bottom: 1px solid #e2e8f0; }
+  .tes-rs .q-text { font-size: 15px; color: #0c1a36; font-weight: 500; flex: 1; }
+  .tes-rs .q-opts { display: flex; gap: 8px; flex-shrink: 0; }
+  .tes-rs .q-btn { font-size: 13px; padding: 8px 14px; border-radius: 20px; border: 1px solid #cbd5e1; background: #fff; color: #0c1a36; cursor: pointer; white-space: nowrap; }
+  .tes-rs .q-btn.active { background: #e8720c; border-color: #e8720c; color: #fff; }
+  .tes-rs .next-btn { margin-top: 24px; width: 100%; padding: 14px; border-radius: 8px; border: none; background: #0c1a36; color: #fff; font-size: 15px; font-weight: 600; cursor: pointer; }
+  .tes-rs .next-btn:disabled { background: #cbd5e1; cursor: not-allowed; }
+  .tes-rs #screen2 { display: none; }
+  .tes-rs .handoff { font-size: 15px; color: #0c1a36; font-weight: 600; margin: 32px 0 20px; }
+  .tes-rs .looks-for-label { font-size: 12px; font-weight: 700; letter-spacing: 0.06em; color: #e8720c; text-transform: uppercase; margin: 0 0 16px; }
+  .tes-rs .lf-row { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 18px; }
+  .tes-rs .lf-num { width: 28px; height: 28px; border-radius: 50%; background: #e8720c; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; flex-shrink: 0; }
+  .tes-rs .lf-text { font-size: 15px; color: #0c1a36; font-weight: 500; line-height: 1.5; }
+  .tes-rs .form-fields { margin-top: 28px; border-top: 1px solid #e2e8f0; padding-top: 24px; display: flex; flex-direction: column; gap: 12px; }
+  .tes-rs input, .tes-rs select { padding: 12px 14px; border-radius: 8px; border: 1px solid #cbd5e1; font-size: 14px; }
+  .tes-rs .submit-btn { margin-top: 6px; padding: 14px; border-radius: 8px; border: none; background: #e8720c; color: #fff; font-size: 15px; font-weight: 600; cursor: pointer; }
+  .tes-rs .status { font-size: 14px; margin-top: 12px; }
+</style>
+
+<div style="max-width:640px;margin:0 auto;padding:20px 0;">
+  <a href="/"><img src="/truckease-logo.png" alt="TruckEase Solutions" style="height:28px;" /></a>
+</div>
+<div class="tes-rs">
+  <div id="screen1">
+    <h1>How well do you actually know your numbers?</h1>
+    <p class="sub">Five quick questions. No account needed — just answer honestly.</p>
+    <div id="quiz"></div>
+    <button class="next-btn" id="nextBtn" disabled>Continue</button>
+  </div>
+
+  <div id="screen2">
+    <p class="handoff" id="handoffLine"></p>
+    <p class="looks-for-label">What your risk screening looks for</p>
+    <div class="lf-row"><div class="lf-num">1</div><div class="lf-text">Public safety indicators that could attract additional regulatory attention</div></div>
+    <div class="lf-row"><div class="lf-num">2</div><div class="lf-text">Authority and registration issues that may interrupt operations</div></div>
+    <div class="lf-row"><div class="lf-num">3</div><div class="lf-text">Filing gaps and regulatory inconsistencies that deserve attention</div></div>
+    <div class="lf-row"><div class="lf-num">4</div><div class="lf-text">Canadian compliance indicators where applicable</div></div>
+
+    <form class="form-fields" id="rsForm">
+      <input type="text" name="fullName" placeholder="Full name" required />
+      <input type="email" name="email" placeholder="Email" required />
+      <input type="tel" name="phone" placeholder="Phone" />
+      <input type="text" name="dotNumber" placeholder="USDOT / MC / NSC / CVOR number" required />
+      <select name="operations">
+        <option value="">Operating region</option>
+        <option value="US Only">US Only</option>
+        <option value="Canada Only">Canada Only</option>
+        <option value="Cross-Border">Cross-Border</option>
+      </select>
+      <button type="submit" class="submit-btn">Send my risk screening request</button>
+      <p class="status" id="status"></p>
+    </form>
+  </div>
+</div>
+
+<script>
+(function () {
+  const questions = [
+    "Which safety category is quietly closest to trouble?",
+    "What would a broker see first on your DOT number?",
+    "Do you actually know why your score moved \u2014 or just that it did?",
+    "How many loads or contracts have you quietly lost, without anyone telling you why?",
+    "Same issue, two different trucks, months apart \u2014 would you catch the connection?"
+  ];
+
+  const answers = new Array(questions.length).fill(null);
+  const quizEl = document.getElementById('quiz');
+  const nextBtn = document.getElementById('nextBtn');
+
+  questions.forEach((q, i) => {
+    const row = document.createElement('div');
+    row.className = 'q-row';
+    const text = document.createElement('div');
+    text.className = 'q-text';
+    text.textContent = q;
+    const opts = document.createElement('div');
+    opts.className = 'q-opts';
+    ['Confident I know', 'Not sure'].forEach(label => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'q-btn';
+      btn.textContent = label;
+      btn.onclick = () => {
+        answers[i] = label;
+        Array.from(opts.children).forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        nextBtn.disabled = answers.includes(null);
+      };
+      opts.appendChild(btn);
+    });
+    row.appendChild(text);
+    row.appendChild(opts);
+    quizEl.appendChild(row);
+  });
+
+  nextBtn.onclick = () => {
+    const unsureCount = answers.filter(a => a === 'Not sure').length;
+    document.getElementById('handoffLine').textContent = unsureCount > 0
+      ? `Based on what you told us, ${unsureCount} of these are worth a closer look \u2014 tell us where to send your findings.`
+      : `Sounds like you know your numbers well \u2014 let's confirm it with your findings.`;
+    document.getElementById('screen1').style.display = 'none';
+    document.getElementById('screen2').style.display = 'block';
+    window.__tesQuizAnswers = questions.map((q, i) => ({ question: q, answer: answers[i] }));
+  };
+
+  document.getElementById('rsForm').addEventListener('submit', async function (e) {
+    e.preventDefault();
+    const statusEl = document.getElementById('status');
+    const fd = new FormData(e.target);
+    const payload = {
+      fullName: fd.get('fullName'),
+      email: fd.get('email'),
+      phone: fd.get('phone'),
+      dotNumber: fd.get('dotNumber'),
+      operations: fd.get('operations'),
+      quizAnswers: window.__tesQuizAnswers || []
+    };
+    statusEl.textContent = 'Sending...';
+    statusEl.style.color = '#64748b';
+    try {
+      const res = await fetch('/api/free-review', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      const data = await res.json();
+      if (data.ok) {
+        statusEl.textContent = "Request received \u2014 we'll follow up shortly.";
+        statusEl.style.color = '#16a34a';
+        e.target.reset();
+      } else {
+        statusEl.textContent = data.error || 'Something went wrong. Try again.';
+        statusEl.style.color = '#dc2626';
+      }
+    } catch (err) {
+      statusEl.textContent = 'Network error. Try again.';
+      statusEl.style.color = '#dc2626';
+    }
+  });
+})();
+</script>
