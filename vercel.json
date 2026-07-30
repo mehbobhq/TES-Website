@@ -86,7 +86,11 @@
     },
     {
       "source": "/free-review",
-      "destination": "/index.html"
+      "destination": "/free-review.html"
+    },
+    {
+      "source": "/free-review.html",
+      "destination": "/free-review.html"
     },
     {
       "source": "/privacy-policy",
