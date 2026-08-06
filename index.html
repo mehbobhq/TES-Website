@@ -9,7 +9,7 @@
         y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
     })(window, document, "clarity", "script", "xfl8vjggnn");
     </script>
-
+ 
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q7M273BPNE"></script>
     <script>
@@ -18,22 +18,22 @@
       gtag('js', new Date());
       gtag('config', 'G-Q7M273BPNE');
     </script>
-
+ 
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
+ 
     <!-- ═══════════════════════════════════════════
          STATIC FALLBACK META — homepage defaults
          All per-route values injected by script below
          ═══════════════════════════════════════════ -->
     <title>TruckEase | Compliance Built for Operational Confidence</title>
-
+ 
     <meta name="description"
           id="meta-description"
           content="TruckEase gives every carrier the compliance infrastructure that large fleets take for granted — automated, auditable, and always current. Serving the US and Canada." />
-
+ 
     <meta name="robots" content="index, follow" />
-
+ 
     <!-- Open Graph -->
     <meta property="og:title"
           content="TruckEase | Compliance Built for Operational Confidence" />
@@ -42,15 +42,15 @@
     <meta property="og:type"    content="website" />
     <meta property="og:url"     content="https://truckeasesolutions.com" />
     <meta property="og:image"   content="https://truckeasesolutions.com/opengraph.jpg" />
-
+ 
     <!-- Twitter Card -->
     <meta name="twitter:card"        content="summary_large_image" />
     <meta name="twitter:title"       content="TruckEase | Compliance Built for Operational Confidence" />
     <meta name="twitter:description" content="TruckEase helps transportation businesses transform compliance into operational confidence. IFTA, IRP, DOT authority, NSC, CVOR, driver records, permits — handled correctly, tracked completely." />
-
+ 
     <!-- Canonical (updated per route by script) -->
     <link id="canonical-link" rel="canonical" href="https://truckeasesolutions.com" />
-
+ 
     <!-- Organization Schema -->
     <script type="application/ld+json">
     {
@@ -65,25 +65,41 @@
       "serviceType": "Trucking Compliance Management"
     }
     </script>
-
+ 
     <!-- Dynamic FAQ schema slot -->
     <script id="faq-schema" type="application/ld+json"></script>
-
+ 
     <!-- Favicon & Fonts -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
           rel="stylesheet" />
-
+ 
     <!-- React app bundle -->
     <script type="module" crossorigin src="/assets/index-CCAkJrgf.js"></script>
     <link rel="stylesheet" crossorigin href="/assets/index-LoHatKut.css" />
   </head>
-
+ 
   <body>
-    <div id="root"></div>
-
+    <div id="root">
+      <!-- Static fallback for crawlers that don't execute JavaScript (e.g. Bingbot).
+           React replaces this instantly on mount for every real visitor —
+           this content is never visible to a human. -->
+      <header>
+        <h1>Compliance Built for Operational Confidence</h1>
+        <p>Compliance isn't the goal. Operational confidence is.</p>
+      </header>
+      <main>
+        <p>A compliance platform that combines regulatory expertise with AI-powered technology to help trucking companies across the United States and Canada understand their compliance position, stay ahead of regulatory requirements, and operate with greater confidence.</p>
+        <h2>How We Help</h2>
+        <p>Compliance Tracking: renewals, licensing, and registrations tracked continuously, including IRP, IFTA, USDOT, MC, NSC, CVOR/SFC, UCR, and state or provincial requirements.</p>
+        <p>Document Organization: compliance records securely organized and retained within the platform, with access controls and activity tracking.</p>
+        <p>Operational Insights: an always-on layer that connects what's happening across your operation and surfaces patterns difficult to identify through manual tracking alone.</p>
+        <p>Decision Support: compliance data evaluated against a growing framework of regulatory checks and operational rules to provide practical guidance for what to do next.</p>
+      </main>
+    </div>
+ 
     <script>
       // ─────────────────────────────────────────────────────────────────
       // PER-ROUTE META — applied on every navigation
@@ -152,34 +168,34 @@
           desc:  "Know where your compliance stands before regulators do. A personal review of your compliance profile — authority status, safety record, filing currency, and permit standing — for transportation operations across the US and Canada."
         }
       };
-
+ 
       function updatePageMeta() {
         const path = window.location.pathname;
         const data = metaData[path] || metaData["/"];
-
+ 
         document.title = data.title;
-
+ 
         const descMeta = document.getElementById("meta-description");
         if (descMeta) descMeta.setAttribute("content", data.desc);
-
+ 
         const canonicalLink = document.getElementById("canonical-link");
         if (canonicalLink) {
           canonicalLink.setAttribute("href", "https://truckeasesolutions.com" + path);
         }
-
+ 
         const faqScript = document.getElementById("faq-schema");
         if (faqScript) {
           faqScript.textContent = data.faq ? JSON.stringify(data.faq) : "";
         }
-
+ 
         // Blog link lives in footer only — injected here
         injectBlogFooterLink();
       }
-
+ 
       function injectBlogFooterLink() {
         setTimeout(() => {
           if (document.getElementById("dynamic-blog-link")) return;
-
+ 
           const footerLinks = document.querySelectorAll("footer a");
           let contactLink = null;
           for (const link of footerLinks) {
@@ -188,7 +204,7 @@
               break;
             }
           }
-
+ 
           if (contactLink && contactLink.parentNode) {
             const blogLink = document.createElement("a");
             blogLink.id        = "dynamic-blog-link";
@@ -199,11 +215,11 @@
           }
         }, 400);
       }
-
+ 
       // SPA route change detection
       let currentPath = window.location.pathname;
       updatePageMeta();
-
+ 
       setInterval(() => {
         if (currentPath !== window.location.pathname) {
           currentPath = window.location.pathname;
@@ -211,7 +227,7 @@
           updatePageMeta();
         }
       }, 100);
-
+ 
       // ─────────────────────────────────────────────────────────────
       // /free-review is now a standalone static page (free-review.html),
       // not an in-app route. The SPA's own router still intercepts
@@ -230,3 +246,4 @@
     </script>
   </body>
 </html>
+ 
