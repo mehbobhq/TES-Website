@@ -82,10 +82,11 @@
   </head>
  
   <body>
-    <div id="root">
-      <!-- Static fallback for crawlers that don't execute JavaScript (e.g. Bingbot).
-           React replaces this instantly on mount for every real visitor —
-           this content is never visible to a human. -->
+    <div id="root"></div>
+    <noscript>
+      <!-- Real content for crawlers that don't execute JavaScript (e.g. Bingbot).
+           This tag is never rendered by the browser when JavaScript is running —
+           no flash, no timing race, genuinely invisible to real visitors. -->
       <header>
         <h1>Compliance Built for Operational Confidence</h1>
         <p>Compliance isn't the goal. Operational confidence is.</p>
@@ -98,7 +99,7 @@
         <p>Operational Insights: an always-on layer that connects what's happening across your operation and surfaces patterns difficult to identify through manual tracking alone.</p>
         <p>Decision Support: compliance data evaluated against a growing framework of regulatory checks and operational rules to provide practical guidance for what to do next.</p>
       </main>
-    </div>
+    </noscript>
  
     <script>
       // ─────────────────────────────────────────────────────────────────
